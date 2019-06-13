@@ -1,7 +1,10 @@
 C:\Users\Dante\source\repos\BlackJack\BlackJack\bin\Debug\BlackJack.exe.config
 C:\Users\Dante\source\repos\BlackJack\BlackJack\bin\Debug\BlackJack.exe
 C:\Users\Dante\source\repos\BlackJack\BlackJack\bin\Debug\BlackJack.pdb
-C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.csprojAssemblyReference.cache
 C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.csproj.CoreCompileInputs.cache
 C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.exe
 C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJack\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\BlackJack\obj\Debug\BlackJack.csproj.CopyComplete

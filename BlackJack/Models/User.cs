@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,16 @@ namespace BlackJack.Models
         {
             this.Name = name;
             this.Bet = bet;
+            this.IsBot = false;
+        }
+        
+        [JsonConstructor]
+        public User(string name,int bet,int score,List<Card>cards)
+        {
+            this.Name = name;
+            this.Bet = bet;
+            this.Score = score;
+            this.Cards = cards;
             this.IsBot = false;
         }
     }

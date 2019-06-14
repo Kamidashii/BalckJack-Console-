@@ -13,15 +13,16 @@ namespace BlackJack
         static void Main(string[] args)
         {
             List<User> users = new List<User>() { new User("Vasya", 200),
-            new Bot("CalmBot",200,Enums.Bot_Enums.Bot_Demeanor.Safe),
-            new Bot("NormalBot",200,Enums.Bot_Enums.Bot_Demeanor.Normal),
-            new Bot("DesperateBot",200,Enums.Bot_Enums.Bot_Demeanor.Desperate)};
+            new Bot("CalmBot",50,Enums.Bot_Enums.Bot_Demeanor.Safe),
+            new Bot("NormalBot",100,Enums.Bot_Enums.Bot_Demeanor.Normal),
+            new Bot("DesperateBot",400,Enums.Bot_Enums.Bot_Demeanor.Desperate),
+            new Bot("NormalBot2", 100,Enums.Bot_Enums.Bot_Demeanor.Normal)};
 
 
             Croupier croupier = new Croupier();
             MainView mainView = new MainView();
 
-            GameController.GetInstance().SetData(users, croupier,4,1, mainView);
+            GameController.GetInstance().SetData(users, croupier, 2, 1);
 
             GameController.GetInstance().StartGames();
 

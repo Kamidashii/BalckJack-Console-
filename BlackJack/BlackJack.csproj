@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Bot_Enums.cs" />
+    <Compile Include="Managers\BasicManager.cs" />
+    <Compile Include="Managers\BotManager.cs" />
+    <Compile Include="Managers\CroupierManager.cs" />
+    <Compile Include="Managers\DeckManager.cs" />
+    <Compile Include="Managers\ResultsManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\Ace.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\Card.cs" />

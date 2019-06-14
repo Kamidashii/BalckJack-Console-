@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace BlackJack.Models
 {
-    class Ace : Card
+    public class Ace : Card
     {
-        private readonly int specialCost=1;
-        public bool IsSpecialOn=false;
+        private readonly int specialCost = 1;
+        public bool IsSpecialOn = false;
 
-        public Ace(Enums.Card_Enums.CardRank rank, Enums.Card_Enums.CardSuit suit) : base(rank, suit)
-        {
-        }
+        public Ace(Enums.Card_Enums.CardRank rank, Enums.Card_Enums.CardSuit suit) : base(rank, suit) { }
 
         public int GetSpecialCostDifference()
         {

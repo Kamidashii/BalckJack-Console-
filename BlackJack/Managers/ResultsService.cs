@@ -10,7 +10,7 @@ using Views;
 
 namespace BlackJack.Managers
 {
-    public class ResultsManager
+    public class ResultsService
     {
         public void SaveResults(List<GameResult>gameResults)
         {

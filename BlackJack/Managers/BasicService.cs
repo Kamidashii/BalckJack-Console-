@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BlackJack.Managers
 {
-    public class BasicManager
+    public class BasicService
     {
         protected List<User> players;
         protected List<Deck> decks;
         protected Croupier croupier;
 
-        public BasicManager(List<User> players, List<Deck> decks, Croupier croupier)
+        public BasicService(List<User> players, List<Deck> decks, Croupier croupier)
         {
             this.players = players;
             this.decks = decks;

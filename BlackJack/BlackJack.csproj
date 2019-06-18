@@ -46,13 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Bot_Constants.cs" />
     <Compile Include="Enums\Bot_Enums.cs" />
-    <Compile Include="Managers\BasicManager.cs" />
-    <Compile Include="Managers\BotManager.cs" />
-    <Compile Include="Managers\CroupierManager.cs" />
-    <Compile Include="Managers\DeckManager.cs" />
-    <Compile Include="Managers\ResultsManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Managers\BasicService.cs" />
+    <Compile Include="Managers\BotService.cs" />
+    <Compile Include="Managers\CroupierService.cs" />
+    <Compile Include="Managers\DeckService.cs" />
+    <Compile Include="Managers\ResultsService.cs" />
+    <Compile Include="Managers\UserService.cs" />
     <Compile Include="Models\Ace.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\Card.cs" />

@@ -16,12 +16,12 @@ namespace BlackJack
     {
 
         #region Managers
-        private BasicManager basicManager;
-        private BotManager botManager;
-        private UserManager userManager;
-        private CroupierManager croupierManager;
-        private DeckManager deckManager;
-        private ResultsManager resultsManager;
+        private BasicService basicManager;
+        private BotService botManager;
+        private UserService userManager;
+        private CroupierService croupierManager;
+        private DeckService deckManager;
+        private ResultsService resultsManager;
         #endregion
 
         private List<User> players;
@@ -54,12 +54,12 @@ namespace BlackJack
 
         private void InitializeManagers()
         {
-            this.basicManager = new BasicManager(players, decks, croupier);
-            this.botManager = new BotManager(players, decks, croupier);
-            this.userManager = new UserManager(players, decks, croupier);
-            this.croupierManager = new CroupierManager(players, decks, croupier);
-            this.deckManager = new DeckManager();
-            this.resultsManager = new ResultsManager();
+            this.basicManager = new BasicService(players, decks, croupier);
+            this.botManager = new BotService(players, decks, croupier);
+            this.userManager = new UserService(players, decks, croupier);
+            this.croupierManager = new CroupierService(players, decks, croupier);
+            this.deckManager = new DeckService();
+            this.resultsManager = new ResultsService();
         }
 
         public static GameController GetInstance()

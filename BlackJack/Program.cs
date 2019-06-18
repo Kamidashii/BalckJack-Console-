@@ -20,7 +20,6 @@ namespace BlackJack
 
 
             Croupier croupier = new Croupier();
-            MainView mainView = new MainView();
 
             GameController.GetInstance().SetData(users, croupier, 2, 1);
 

@@ -8,9 +8,9 @@ using Views;
 
 namespace BlackJack.Managers
 {
-    public class BotManager : BasicManager
+    public class BotService : BasicService
     {
-        public BotManager(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier)
+        public BotService(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier)
         { }
 
         public void DesperateBotAction(Bot bot)
@@ -25,7 +25,7 @@ namespace BlackJack.Managers
 
         public void NormalBotAction(Bot bot)
         {
-            while (bot.Score <= 15 && IsPlayerScoreValid(bot))
+            while (bot.Score <= Constants.Bot_Constants.NORMAL_BOT_MAX_SCORE && IsPlayerScoreValid(bot))
             {
                 BotGetCard(bot, PullOutCard());
                 MainView.ShowBotSpecificCardGetting(bot);
@@ -35,7 +35,7 @@ namespace BlackJack.Managers
 
         public void SafeBotAction(Bot bot)
         {
-            while (bot.Score <= 11 && IsPlayerScoreValid(bot))
+            while (bot.Score <= Constants.Bot_Constants.SAFE_BOT_MAX_SCORE && IsPlayerScoreValid(bot))
             {
                 BotGetCard(bot, PullOutCard());
                 MainView.ShowBotSpecificCardGetting(bot);

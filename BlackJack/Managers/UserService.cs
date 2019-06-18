@@ -8,9 +8,9 @@ using Views;
 
 namespace BlackJack.Managers
 {
-    public class UserManager : BasicManager
+    public class UserService : BasicService
     {
-        public UserManager(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier) { }
+        public UserService(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier) { }
 
         public void StartUserTurn(User user)
         {

@@ -8,9 +8,9 @@ using Views;
 
 namespace BlackJack.Managers
 {
-    public class CroupierManager : BasicManager
+    public class CroupierService : BasicService
     {
-        public CroupierManager(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier) { }
+        public CroupierService(List<User> players, List<Deck> decks, Croupier croupier) : base(players, decks, croupier) { }
 
         public void StartCroupierTurn(Croupier croupier)
         {

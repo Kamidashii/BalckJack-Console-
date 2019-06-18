@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack.Managers
 {
-    public class DeckManager
+    public class DeckService
     {
         public void SetAllCards(Deck deck)
         {
@@ -42,11 +42,11 @@ namespace BlackJack.Managers
             int count = deck.Cards.Count;
             for (int i = 0; i < count; ++i)
             {
-                int r = i + random.Next(count - i);
+                int swapIndex = i + random.Next(count - i);
 
                 var tmp = deck.Cards[i];
-                deck.Cards[i] = deck.Cards[r];
-                deck.Cards[r] = tmp;
+                deck.Cards[i] = deck.Cards[swapIndex];
+                deck.Cards[swapIndex] = tmp;
             }
         }
     }

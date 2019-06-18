@@ -4,63 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Views;
-using BlackJack.Models;
-using Newtonsoft.Json;
 using System.IO;
-using BlackJack.Managers;
 using System.Threading;
+using BSL_Layer.Services;
+using BSL_Layer.Models;
+using HelpfulValues.Enums;
 
 namespace BlackJack
 {
-    class GameController
+    public class GameController
     {
-
-        #region Managers
-        private BasicService basicManager;
-        private BotService botManager;
-        private UserService userManager;
-        private CroupierService croupierManager;
-        private DeckService deckManager;
-        private ResultsService resultsManager;
-        #endregion
-
-        private List<User> players;
-        private List<Deck> decks;
-        private Croupier croupier;
-
-        private int decksCount;
-
-        private int gamesCount;
-        private int gameId;
-        private List<GameResult> gameResults;
+        GameService gameService;
 
         private static GameController _instance;
-
-        public void SetData(List<User> players, Croupier croupier, int gamesCount, int decksCount)
-        {
-            this.players = players;
-            this.croupier = croupier;
-            this.decks = new List<Deck>(decksCount);
-            InitializeManagers();
-
-
-            GenerateDecks(decksCount);
-            this.decksCount = decksCount;
-
-            this.gamesCount = gamesCount;
-            gameResults = new List<GameResult>(gamesCount);
-            gameId = 0;
-        }
-
-        private void InitializeManagers()
-        {
-            this.basicManager = new BasicService(players, decks, croupier);
-            this.botManager = new BotService(players, decks, croupier);
-            this.userManager = new UserService(players, decks, croupier);
-            this.croupierManager = new CroupierService(players, decks, croupier);
-            this.deckManager = new DeckService();
-            this.resultsManager = new ResultsService();
-        }
 
         public static GameController GetInstance()
         {
@@ -72,172 +28,201 @@ namespace BlackJack
             return _instance;
         }
 
+        private GameController()
+        {
+            List<User> users = new List<User>() { new User("Vasya", 200),
+            new Bot("CalmBot",50,Bot_Enums.Bot_Demeanor.Safe),
+            new Bot("NormalBot",100,Bot_Enums.Bot_Demeanor.Normal),
+            new Bot("DesperateBot",400,Bot_Enums.Bot_Demeanor.Desperate),
+            new Bot("NormalBot2", 100,Bot_Enums.Bot_Demeanor.Normal)};
+
+
+            Croupier croupier = new Croupier();
+
+            this.gameService=new GameService(users,croupier,2,1);
+        }
+
         public void StartGames()
         {
-            //MainView.AskResults(resultsManager.LoadResults());
-            //Console.ReadLine();
-            for (int i = 0; i < this.gamesCount; ++i)
+            for (int i = 0; i < gameService.gamesCount; ++i)
             {
                 MainView.ShowWaitNextGame();
-                MainView.ShowGameId(this.gameId);
+                MainView.ShowGameId(gameService.gameId);
 
                 StartGame();
             }
 
-            resultsManager.SaveResults(this.gameResults);
+            gameService.SaveResults();
             MainView.ShowGamesOverMessage();
 
-            MainView.AskResults(resultsManager.LoadResults());
+            MainView.AskResults(gameService.LoadResults());
         }
 
         private void StartGame()
         {
-            GiveFirstCards();
+            gameService.GiveFirstCards();
+            ShowPlayersScore();
 
-            for (int i = 0; i < players.Count; ++i)
+            for (int i = 0; i < gameService.Players.Count; ++i)
             {
-                if (this.players[i].IsBot)
+                if (gameService.Players[i].IsBot)
                 {
-                    botManager.StartBotTurn(this.players[i] as Bot);
+                    MainView.ShowBotTurn(gameService.Players[i] as Bot);
+                    StartBotTurn(gameService.Players[i] as Bot);
                 }
                 else
                 {
-                    userManager.StartUserTurn(this.players[i]);
+                    MainView.ShowUserTurn(gameService.Players[i]);
+                    StartUserTurn(gameService.Players[i]);
                 }
                 SetArtificialWaiting();
             }
 
-            croupierManager.StartCroupierTurn(croupier);
-            MainView.ShowCroupierScore(croupier);
-            CheckWinners();
+            MainView.ShowCroupierGetTurn();
+            gameService.CroupierService.StartCroupierTurn(gameService.Croupier);
 
-            ResetGameData();
+            MainView.ShowCroupierScore(gameService.Croupier);
+            GameResult gameResult= gameService.CheckWinners();
+
+
+            ShowWinners(gameResult.Winners);
+            ShowLosers(gameResult.Losers);
+            ShowDraws(gameResult.Draws);
+
+
+            gameService.ResetGameData();
         }
 
-
-
-        private void GenerateDecks(int decksCount)
+        private void StartUserTurn(User user)
         {
-            for (int i = 0; i < decksCount; ++i)
+            User_Enums.ActionType choosedAction = User_Enums.ActionType.Invalid;
+            do
             {
-                Deck deck = new Deck();
-                deckManager.SetAllCards(deck);
-                deckManager.ShuffleCards(deck);
+                MainView.ShowUserActionInstruction();
+                choosedAction = MainView.FindOutUserAction();
 
-                this.decks.Add(deck);
-            }
+                switch (choosedAction)
+                {
+                    case User_Enums.ActionType.Take:
+                        {
+                            gameService.UserService.UserGetCard(user, gameService.BasicService.PullOutCard());
+                            MainView.ShowUserCardGetting(user);
+
+                            MainView.ShowUserSpecificCardGetting(user);
+
+                            gameService.BasicService.RecalculateScore(user);
+                            MainView.ShowUserScore(user);
+
+                            if (!gameService.BasicService.IsPlayerScoreValid(user))
+                            {
+                                MainView.ShowOverfeedScoreMessage(user);
+                                choosedAction = User_Enums.ActionType.Finished;
+                            }
+
+                            else if (gameService.BasicService.IsPlayerWonScore(user))
+                            {
+                                MainView.ShowGreatScoreMessage(user);
+                                choosedAction = User_Enums.ActionType.Finished;
+                            }
+                        }
+                        break;
+                    case User_Enums.ActionType.Enough:
+                        {
+                            choosedAction = User_Enums.ActionType.Finished;
+                        }
+                        break;
+                    case User_Enums.ActionType.Surrender:
+                        {
+                            MainView.ShowUserLost(user);
+                            choosedAction = User_Enums.ActionType.Finished;
+                        }
+                        break;
+                    case User_Enums.ActionType.ShowCards:
+                        {
+                            ShowUserOwnedCards(user);
+                        }
+                        break;
+                    default:
+                        {
+                            MainView.ShowInvalidChoose();
+                            choosedAction = User_Enums.ActionType.Invalid;
+                        }
+                        break;
+                }
+
+            } while (choosedAction != User_Enums.ActionType.Finished);
         }
 
-
-
-        private void CheckWinners()
+        private void ShowPlayersScore()
         {
-            GameResult gameResult = new GameResult(gameId);
-            gameResult.AllGamesCount = this.gamesCount;
-
-            for (int i = 0; i < this.players.Count; ++i)
+            for (int i = 0; i < gameService.Players.Count; ++i)
             {
-                if (!basicManager.IsPlayerScoreValid(players[i]) || (players[i].Score <= croupier.Score && basicManager.IsPlayerScoreValid(croupier)))
-                {
-                    UserLost(players[i], gameResult);
-                }
-
-                else if (players[i].Score > croupier.Score || !basicManager.IsPlayerScoreValid(croupier))
-                {
-                    UserWon(players[i], gameResult);
-                }
-
-                else
-                {
-                    UserDraw(players[i], gameResult);
-                }
-            }
-            gameResult.Croupier = croupierManager.MakePlayerClone(croupier as Player) as Croupier;
-            gameResults.Add(gameResult);
-            gameId++;
-        }
-
-        private void GiveFirstCards()
-        {
-            for (int i = 0; i < players.Count; ++i)
-            {
-                for (int j = 0; j < 2; ++j)
-                {
-                    userManager.UserGetCard(players[i], basicManager.PullOutCard());
-                    basicManager.RecalculateScore(this.players[i]);
-                }
-                MainView.ShowUserScore(players[i]);
+                MainView.ShowUserScore(gameService.Players[i]);
                 SetArtificialWaiting();
             }
 
-            croupierManager.CroupierGetCard(croupier, basicManager.PullOutCard());
+            MainView.ShowCroupierCardGetting();
         }
 
-        private void UserWon(User user, GameResult gameResult)
+        private void ShowUserOwnedCards(User user)
         {
-            if (user.IsBot)
+            for (int i = 0; i < user.Cards.Count; ++i)
             {
-                gameResult.Winners.Add(botManager.MakePlayerClone(user as Player) as Bot);
+                MainView.ShowCard(user.Cards[i]);
             }
-            else
-            {
-                gameResult.Winners.Add(userManager.MakePlayerClone(user as Player) as User);
-            }
-            MainView.ShowUserWon(user);
         }
 
-        private void UserLost(User user, GameResult gameResult)
+
+        private void StartBotTurn(Bot bot)
         {
-            if (user.IsBot)
+            switch (bot.Demeanor)
             {
-                gameResult.Losers.Add(botManager.MakePlayerClone(user as Player) as Bot);
+                case Bot_Enums.Bot_Demeanor.Desperate:
+                    {
+                        gameService.BotService.DesperateBotAction(bot);
+                        MainView.ShowBotSpecificCardGetting(bot);
+                    }
+                    break;
+                case Bot_Enums.Bot_Demeanor.Normal:
+                    gameService.BotService.NormalBotAction(bot);
+                    MainView.ShowBotSpecificCardGetting(bot);
+                    break;
+                case Bot_Enums.Bot_Demeanor.Safe:
+                    gameService.BotService.SafeBotAction(bot);
+                    MainView.ShowBotSpecificCardGetting(bot);
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                gameResult.Losers.Add(userManager.MakePlayerClone(user as Player) as User);
-            }
-            MainView.ShowUserLost(user);
         }
 
-        private void UserDraw(User user, GameResult gameResult)
+        private void ShowWinners(List<User>users)
         {
-            if (user.IsBot)
+            for(int i=0;i<users.Count;++i)
             {
-                gameResult.Draw.Add(botManager.MakePlayerClone(user as Player) as Bot);
+                MainView.ShowUserWon(users[i]);
             }
-            else
+        }
+
+        private void ShowLosers(List<User> users)
+        {
+            for (int i = 0; i < users.Count; ++i)
             {
-                gameResult.Draw.Add(userManager.MakePlayerClone(user as Player) as User);
+                MainView.ShowUserLost(users[i]);
             }
-            MainView.ShowUserDraw(user);
+        }
+
+        private void ShowDraws(List<User> users)
+        {
+            for (int i = 0; i < users.Count; ++i)
+            {
+                MainView.ShowUserDraw(users[i]);
+            }
         }
 
         private void SetArtificialWaiting()
         {
             Thread.Sleep(2000);
         }
-
-
-        private void ResetDecks()
-        {
-            GenerateDecks(decksCount);
-        }
-
-
-        private void ResetGameData()
-        {
-            for (int i = 0; i < this.players.Count; ++i)
-            {
-                basicManager.ResetPlayerScore(this.players[i]);
-                basicManager.ResetPlayerDeck(this.players[i]);
-            }
-
-            basicManager.ResetPlayerScore(this.croupier);
-            basicManager.ResetPlayerDeck(this.croupier);
-
-
-            ResetDecks();
-        }
-
     }
 }

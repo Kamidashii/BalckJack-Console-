@@ -1,12 +1,11 @@
-﻿using System;
+﻿using BSL_Layer.Models;
+using HelpfulValues.Constants;
+using HelpfulValues.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlackJack.Constants;
-using BlackJack;
-using BlackJack.Enums;
-using BlackJack.Models;
 
 namespace Views
 {
@@ -36,7 +35,7 @@ namespace Views
 
         public static void ShowUserWon(User user)
         {
-            Console.WriteLine($"\n User {user.Name} has won {user.Bet * GameController_Constants.BET_RATIO}!");
+            Console.WriteLine($"\n User {user.Name} has won {user.Bet * GameService_Constants.BET_RATIO}!");
         }
 
         public static void ShowUserLost(User user)
@@ -160,7 +159,7 @@ namespace Views
             Console.WriteLine($"\t All games: {gameResults.Count}\n\n");
             for (int i = 0; i < gameResults.Count; ++i)
             {
-                Console.WriteLine($"\t Game number: {i + 1} of {gameResults[i].AllGamesCount}\n");
+                Console.WriteLine($"\t Game number: {i + 1} \n");
                 Console.WriteLine("<Winners: ");
                 ShowPlayers(gameResults[i].Winners);
                 Console.WriteLine("Winners>\n");
@@ -170,7 +169,7 @@ namespace Views
                 Console.WriteLine("Losers>\n");
 
                 Console.WriteLine("<Draw: ");
-                ShowPlayers(gameResults[i].Draw);
+                ShowPlayers(gameResults[i].Draws);
                 Console.WriteLine("Draw>\n");
 
                 Console.WriteLine($"Croupier score: {gameResults[i].Croupier.Score}\n\n");

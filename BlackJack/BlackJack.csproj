@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,35 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\Bot_Constants.cs" />
-    <Compile Include="Enums\Bot_Enums.cs" />
-    <Compile Include="Managers\BasicService.cs" />
-    <Compile Include="Managers\BotService.cs" />
-    <Compile Include="Managers\CroupierService.cs" />
-    <Compile Include="Managers\DeckService.cs" />
-    <Compile Include="Managers\ResultsService.cs" />
-    <Compile Include="Managers\UserService.cs" />
-    <Compile Include="Models\Ace.cs" />
-    <Compile Include="Models\Bot.cs" />
-    <Compile Include="Models\Card.cs" />
-    <Compile Include="Constants\Croupier_Constants.cs" />
-    <Compile Include="Constants\Deck_Constants.cs" />
-    <Compile Include="Constants\GameController_Constants.cs" />
-    <Compile Include="Models\Croupier.cs" />
-    <Compile Include="Models\Deck.cs" />
-    <Compile Include="Enums\Card_Enums.cs" />
-    <Compile Include="Enums\User_Enums.cs" />
     <Compile Include="GameController.cs" />
-    <Compile Include="Models\GameResult.cs" />
-    <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Views\MainView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BSL_Layer\BSL_Layer.csproj">
+      <Project>{b3e8a99e-d0a8-48d0-bbed-ba97b60f29ff}</Project>
+      <Name>BSL_Layer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HelpfulValues\HelpfulValues.csproj">
+      <Project>{0b8f8989-fd38-4df6-afe0-e6e4002107ab}</Project>
+      <Name>HelpfulValues</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

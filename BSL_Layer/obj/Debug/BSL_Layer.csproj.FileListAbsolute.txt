@@ -1,0 +1,13 @@
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\BSL_Layer.dll
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\BSL_Layer.pdb
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\DAS_Layer.dll
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\HelpfulValues.dll
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\DAS_Layer.pdb
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\HelpfulValues.pdb
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\obj\Debug\BSL_Layer.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\obj\Debug\BSL_Layer.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\obj\Debug\BSL_Layer.csproj.CopyComplete
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\obj\Debug\BSL_Layer.dll
+C:\Users\Dante\source\repos\BlackJack\BSL_Layer\obj\Debug\BSL_Layer.pdb

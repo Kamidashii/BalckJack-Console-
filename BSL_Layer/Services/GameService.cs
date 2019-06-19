@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using BSL_Layer.Interfaces;
 using BSL_Layer.Models;
+using DA_Layer;
 using DA_Layer.Repositories;
 using HelpfulValues.Constants;
 
@@ -21,19 +23,19 @@ namespace BSL_Layer.Services
         public JSonUnitOfWork JSonService { get; private set; }
         #endregion
 
-        private List<User> players;
+        private List<IPlayer> players;
         private List<Deck> decks;
-        private Croupier croupier;
+        private IPlayer croupier;
 
-        public List<User> Players { get { return this.players; } }
-        public Croupier Croupier { get { return this.croupier; } }
+        public List<IPlayer> Players { get { return this.players; } }
+        public IPlayer Croupier { get { return this.croupier; } }
 
         private int decksCount;
 
         public int gamesCount;
         public int gameId;
 
-        public GameService(List<User> players, Croupier croupier, int gamesCount, int decksCount)
+        public GameService(List<IPlayer> players, IPlayer croupier, int gamesCount, int decksCount)
         {
             this.players = players;
             this.croupier = croupier;
@@ -124,15 +126,15 @@ namespace BSL_Layer.Services
             {
                 for (int j = 0; j < 2; ++j)
                 {
-                    UserService.UserGetCard(players[i], BasicService.PullOutCard());
+                    UserService.PlayerGetCard(players[i], BasicService.PullOutCard());
                     BasicService.RecalculateScore(this.players[i]);
                 }
             }
 
-            CroupierService.CroupierGetCard(croupier, BasicService.PullOutCard());
+            CroupierService.PlayerGetCard(croupier, BasicService.PullOutCard());
         }
 
-        private void UserWon(User user, GameResult gameResult)
+        private void UserWon(IPlayer user, GameResult gameResult)
         {
             if (user.IsBot)
             {
@@ -144,7 +146,7 @@ namespace BSL_Layer.Services
             }
         }
 
-        private void UserLost(User user, GameResult gameResult)
+        private void UserLost(IPlayer user, GameResult gameResult)
         {
             if (user.IsBot)
             {
@@ -156,7 +158,7 @@ namespace BSL_Layer.Services
             }
         }
 
-        private void UserDraw(User user, GameResult gameResult)
+        private void UserDraw(IPlayer user, GameResult gameResult)
         {
             if (user.IsBot)
             {

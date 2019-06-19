@@ -6,14 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DA_Layer.Interfaces;
 using DA_Layer.Models;
+using DA_Layer.Repositories;
 using HelpfulValues.Constants;
 using Newtonsoft.Json;
 
-namespace DA_Layer.Repositories
+namespace DA_Layer
 {
     public class JSonUnitOfWork : IUnitOfWork
     {
         private GameResultsRepository gameResultsRepository;
+        private ProfilesRepository profilesRepository;
 
         public IRepository<GameResult> GameResultsRepository
         {
@@ -29,6 +31,18 @@ namespace DA_Layer.Repositories
                 }
 
                 return this.gameResultsRepository;
+            }
+        }
+
+        public IRepository<Profile> ProfilesRepository
+        {
+            get
+            {
+                if(this.profilesRepository==null)
+                {
+                    this.profilesRepository = new ProfilesRepository(new List<Profile> { new Profile("login1", "password1", new User("Vasya", 200)) });
+                }
+                return this.profilesRepository;
             }
         }
 

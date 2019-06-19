@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSL_Layer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,23 +7,24 @@ using System.Threading.Tasks;
 
 namespace BSL_Layer.Models
 {
-    public abstract class Player
+    public abstract class Player:IPlayer
     {
-        public int Score = 0;
-        public bool IsBot;
-        public List<Card> Cards = new List<Card>();
+        public int Score { get; set; } = 0;
+        public bool IsBot { get; set; }
+        public List<ICard> Cards { get; set; } = new List<ICard>();
         
 
-        protected void ConvertCards(List<DA_Layer.Models.Card>DAcards)
+        public List<ICard> ConvertCardsFromDB(List<DA_Layer.Models.Card>DAcards)
         {
-            this.Cards = new List<Card>(DAcards.Count);
+            List<ICard> cards = new List<ICard>(DAcards.Count);
             for (int i = 0; i < DAcards.Count; ++i)
             {
-                this.Cards.Add(new Card(DAcards[i]));
+                cards.Add(new Card(DAcards[i]));
             }
+            return cards;
         }
 
-        public List<DA_Layer.Models.Card> GetDBCards()
+        public List<DA_Layer.Models.Card> ConvertCardsToDB()
         {
             List<DA_Layer.Models.Card> DAcards=new List<DA_Layer.Models.Card>();
             for(int i=0;i<this.Cards.Count;++i)

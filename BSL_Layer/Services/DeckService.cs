@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BSL_Layer.Interfaces;
 using BSL_Layer.Models;
 using HelpfulValues.Constants;
 using HelpfulValues.Enums;
@@ -23,7 +24,7 @@ namespace BSL_Layer.Services
                     Card_Enums.CardSuit suit = (Card_Enums.CardSuit)suits.GetValue(i);
                     Card_Enums.CardRank rank = (Card_Enums.CardRank)ranks.GetValue(j);
 
-                    Card card;
+                    ICard card;
                     if (rank == Card_Enums.CardRank.Ace)
                     {
                         card = new Ace(rank, suit);

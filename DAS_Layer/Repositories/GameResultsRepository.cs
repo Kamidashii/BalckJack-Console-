@@ -22,6 +22,11 @@ namespace DA_Layer.Repositories
             this.gameResults.Add(item);
         }
 
+        public GameResult Get(GameResult item)
+        {
+            return this.gameResults.Where(result => result.GameId == item.GameId).FirstOrDefault();
+        }
+
         public IEnumerable<GameResult> GetAll()
         {
             return this.gameResults;

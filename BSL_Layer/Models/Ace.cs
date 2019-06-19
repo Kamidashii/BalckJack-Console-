@@ -17,7 +17,7 @@ namespace BSL_Layer.Models
 
         public int GetSpecialCostDifference()
         {
-            return this.GetCost() - this.specialCost;
+            return this.Cost - this.specialCost;
         }
 
         public Ace(DA_Layer.Models.Ace DAace) : base(DAace)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BSL_Layer.Interfaces;
 using HelpfulValues.Enums;
 
 namespace BSL_Layer.Models
@@ -25,12 +26,12 @@ namespace BSL_Layer.Models
 
         public override DA_Layer.Models.User GetDBUser()
         {
-            DA_Layer.Models.Bot DAbot = new DA_Layer.Models.Bot(this.Name, this.Bet, this.Demeanor, this.Score, this.GetDBCards());
+            DA_Layer.Models.Bot DAbot = new DA_Layer.Models.Bot(this.Name, this.Bet, this.Demeanor, this.Score, this.ConvertCardsToDB());
             return DAbot;
         }
 
 
-        public Bot(string name, int bet, Bot_Enums.Bot_Demeanor demeanor, int score, List<Card> cards) : base(name, bet)
+        public Bot(string name, int bet, Bot_Enums.Bot_Demeanor demeanor, int score, List<ICard> cards) : base(name, bet)
         {
             this.Score = score;
             this.Cards = cards;

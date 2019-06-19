@@ -1,4 +1,5 @@
-﻿using BSL_Layer.Models;
+﻿using BSL_Layer.Interfaces;
+using BSL_Layer.Models;
 using HelpfulValues.Constants;
 using HelpfulValues.Enums;
 using System;
@@ -72,7 +73,7 @@ namespace Views
 
         #region Croupier
 
-        public static void ShowCroupierScore(Croupier croupier)
+        public static void ShowCroupierScore(IPlayer croupier)
         {
             Console.WriteLine($"Croupier's score now is: {croupier.Score}");
         }
@@ -120,7 +121,7 @@ namespace Views
             Console.WriteLine("Invalid choose!");
         }
 
-        public static void ShowCard(Card card)
+        public static void ShowCard(ICard card)
         {
             Console.WriteLine(GetCardInfo(card));
         }
@@ -147,9 +148,9 @@ namespace Views
             Console.WriteLine("\nException: " + message);
         }
 
-        public static string GetCardInfo(Card card)
+        public static string GetCardInfo(ICard card)
         {
-            return $"{Enum.GetName(typeof(Card_Enums.CardRank), card.Rank)} {Enum.GetName(typeof(Card_Enums.CardSuit), card.Suit)} (Cost: {card.GetCost()})";
+            return $"{Enum.GetName(typeof(Card_Enums.CardRank), card.Rank)} {Enum.GetName(typeof(Card_Enums.CardSuit), card.Suit)} (Cost: {card.Cost})";
         }
 
         public static void ShowResults(List<GameResult> gameResults)
@@ -206,6 +207,29 @@ namespace Views
                 Console.WriteLine(builder.ToString());
                 builder.Clear();
             }
+        }
+
+        public static void GetLoginAndPassword(out string login, out string password)
+        {
+            Console.WriteLine("You need to authorize");
+
+            Console.WriteLine("Enter your login please");
+            login = Console.ReadLine();
+
+            Console.WriteLine("Enter your password please");
+            password = Console.ReadLine();
+
+        }
+
+        public static void IncorrectLoginOrPassword()
+        {
+            Console.Clear();
+            Console.WriteLine("Incorrect login or password");
+        }
+
+        public static void WelcomeUser(string name)
+        {
+            Console.WriteLine("Welcome, " + name + "!");
         }
     }
 }

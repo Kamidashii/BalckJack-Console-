@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSL_Layer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace BSL_Layer.Models
         }
 
 
-        public User(string name, int bet, int score, List<Card> cards)
+        public User(string name, int bet, int score, List<ICard> cards)
         {
             this.Name = name;
             this.Bet = bet;
@@ -31,7 +32,7 @@ namespace BSL_Layer.Models
         public User(DA_Layer.Models.User DAuser)
         {
             this.Bet = DAuser.Bet;
-            ConvertCards(DAuser.Cards);
+            this.Cards=ConvertCardsFromDB(DAuser.Cards);
             this.IsBot = DAuser.IsBot;
             this.Score = DAuser.Score;
             this.Name = DAuser.Name;
@@ -39,7 +40,7 @@ namespace BSL_Layer.Models
 
         public virtual DA_Layer.Models.User GetDBUser()
         {
-            DA_Layer.Models.User user = new DA_Layer.Models.User(this.Name, this.Bet, this.Score, this.GetDBCards());
+            DA_Layer.Models.User user = new DA_Layer.Models.User(this.Name, this.Bet, this.Score, this.ConvertCardsToDB());
             return user;
         }
     }

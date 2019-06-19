@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSL_Layer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace BSL_Layer.Models
         }
         
 
-        public Croupier(int score, List<Card> cards)
+        public Croupier(int score, List<ICard> cards)
         {
             this.Score = score;
             this.Cards = cards;
@@ -25,12 +26,12 @@ namespace BSL_Layer.Models
         {
             this.IsBot = DAcroupier.IsBot;
             this.Score = DAcroupier.Score;
-            this.ConvertCards(DAcroupier.Cards);
+            this.Cards=ConvertCardsFromDB(DAcroupier.Cards);
         }
 
         public DA_Layer.Models.Croupier GetDBCroupier()
         {
-            DA_Layer.Models.Croupier user = new DA_Layer.Models.Croupier(this.Score, this.GetDBCards());
+            DA_Layer.Models.Croupier user = new DA_Layer.Models.Croupier(this.Score, this.ConvertCardsToDB());
             return user;
         }
     }

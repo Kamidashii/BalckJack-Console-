@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BSL_Layer.Interfaces;
 using HelpfulValues.Enums;
 
 namespace BSL_Layer.Models
 {
-    public class Card
+    public class Card:ICard
     {
-        public Card_Enums.CardRank Rank;
-        public Card_Enums.CardSuit Suit;
+        public Card_Enums.CardRank Rank { get; set; }
+        public Card_Enums.CardSuit Suit { get; set; }
+        public int Cost { get { return this.cost; } }
 
         private int cost;
 
@@ -35,11 +37,6 @@ namespace BSL_Layer.Models
             DA_Layer.Models.Card card = new DA_Layer.Models.Card(this.Rank, this.Suit);
             card.DefineCost();
             return card;
-        }
-
-        public int GetCost()
-        {
-            return this.cost;
         }
 
         public void DefineCost()

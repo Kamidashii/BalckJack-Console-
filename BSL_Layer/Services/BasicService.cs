@@ -6,23 +6,30 @@ using System.Text;
 using System.Threading.Tasks;
 using HelpfulValues.Constants;
 using HelpfulValues.Enums;
+using BSL_Layer.Interfaces;
+using DA_Layer.Repositories;
+using DA_Layer;
 
 namespace BSL_Layer.Services
 {
-    public class BasicService
+    public class BasicService : IPlayerService
     {
-        protected List<User> players;
+        protected List<IPlayer> players;
         protected List<Deck> decks;
-        protected Croupier croupier;
+        protected IPlayer croupier;
 
-        public BasicService(List<User> players, List<Deck> decks, Croupier croupier)
+        JSonUnitOfWork jSonUnitOfWork;
+
+        public BasicService(List<IPlayer> players, List<Deck> decks, IPlayer croupier)
         {
             this.players = players;
             this.decks = decks;
             this.croupier = croupier;
+
+            jSonUnitOfWork = new JSonUnitOfWork();
         }
 
-        public void RecalculateScore(Player player)
+        public void RecalculateScore(IPlayer player)
         {
             if (IsPlayerScoreValid(player)) return;
 
@@ -33,17 +40,17 @@ namespace BSL_Layer.Services
             }
         }
 
-        public bool IsPlayerWonScore(Player player)
+        public bool IsPlayerWonScore(IPlayer player)
         {
             return player.Score == GameService_Constants.MAX_VALID_SCORE;
         }
 
-        public bool IsPlayerScoreValid(Player player) //If Score more then 21 returns false
+        public bool IsPlayerScoreValid(IPlayer player) //If Score more then 21 returns false
         {
             return player.Score <= GameService_Constants.MAX_VALID_SCORE;
         }
 
-        protected List<Ace> CountAces(Player player)
+        protected List<Ace> CountAces(IPlayer player)
         {
             List<Ace> aces = new List<Ace>();
             for (int i = 0; i < player.Cards.Count; ++i)
@@ -52,9 +59,8 @@ namespace BSL_Layer.Services
                 {
                     Ace ace = player.Cards[i] as Ace;
                     if (!ace.IsSpecialOn)
-                        aces.Add(player.Cards[i] as Ace);
-                    else
                     {
+                        aces.Add(player.Cards[i] as Ace);
                         ace.IsSpecialOn = true;
                     }
                 }
@@ -62,25 +68,43 @@ namespace BSL_Layer.Services
             return aces;
         }
 
-        public Card PullOutCard()
+        public ICard PullOutCard()
         {
             Random random = new Random();
             Deck randomDeck = decks[random.Next(0, decks.Count)];
-            Card randomCard = randomDeck.TakeCard();
+            ICard randomCard = randomDeck.TakeCard();
 
             return randomCard;
         }
 
-        public void ResetPlayerScore(Player player)
+        public void ResetPlayerScore(IPlayer player)
         {
             player.Score = 0;
         }
 
-        public void ResetPlayerDeck(Player player)
+        public void ResetPlayerDeck(IPlayer player)
         {
-            player.Cards = new List<Card>();
+            player.Cards = new List<ICard>();
         }
 
-        public virtual Player MakePlayerClone(Player original) { return null; }
+        public virtual IPlayer MakePlayerClone(IPlayer original) { return null; }
+
+        public void PlayerGetCard(IPlayer player, ICard card)
+        {
+            player.Cards.Add(card);
+            player.Score += card.Cost;
+        }
+
+        public User GetPlayerByProfile(IProfile playerProfile)
+        {
+            DA_Layer.Models.Profile profile = jSonUnitOfWork.ProfilesRepository.Get(playerProfile.GetProfileToDB());
+
+            if (profile == null) return null;
+
+
+            DA_Layer.Models.User DAuser = profile.User;
+
+            return new User(DAuser);
+        }
     }
 }

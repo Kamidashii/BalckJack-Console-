@@ -9,6 +9,7 @@ using System.Threading;
 using BSL_Layer.Services;
 using BSL_Layer.Models;
 using HelpfulValues.Enums;
+using BSL_Layer.Interfaces;
 
 namespace BlackJack
 {
@@ -30,7 +31,7 @@ namespace BlackJack
 
         private GameController()
         {
-            List<User> users = new List<User>() { new User("Vasya", 200),
+            List<IPlayer> players = new List<IPlayer>() {
             new Bot("CalmBot",50,Bot_Enums.Bot_Demeanor.Safe),
             new Bot("NormalBot",100,Bot_Enums.Bot_Demeanor.Normal),
             new Bot("DesperateBot",400,Bot_Enums.Bot_Demeanor.Desperate),
@@ -39,7 +40,10 @@ namespace BlackJack
 
             Croupier croupier = new Croupier();
 
-            this.gameService=new GameService(users,croupier,2,1);
+            this.gameService = new GameService(players, croupier, 1, 1);
+
+            User user = Authorize();
+            this.gameService.Players.Add(user);
         }
 
         public void StartGames()
@@ -72,8 +76,8 @@ namespace BlackJack
                 }
                 else
                 {
-                    MainView.ShowUserTurn(gameService.Players[i]);
-                    StartUserTurn(gameService.Players[i]);
+                    MainView.ShowUserTurn(gameService.Players[i] as User);
+                    StartUserTurn(gameService.Players[i] as User);
                 }
                 SetArtificialWaiting();
             }
@@ -82,7 +86,7 @@ namespace BlackJack
             gameService.CroupierService.StartCroupierTurn(gameService.Croupier);
 
             MainView.ShowCroupierScore(gameService.Croupier);
-            GameResult gameResult= gameService.CheckWinners();
+            GameResult gameResult = gameService.CheckWinners();
 
 
             ShowWinners(gameResult.Winners);
@@ -105,7 +109,7 @@ namespace BlackJack
                 {
                     case User_Enums.ActionType.Take:
                         {
-                            gameService.UserService.UserGetCard(user, gameService.BasicService.PullOutCard());
+                            gameService.UserService.PlayerGetCard(user, gameService.BasicService.PullOutCard());
                             MainView.ShowUserCardGetting(user);
 
                             MainView.ShowUserSpecificCardGetting(user);
@@ -157,7 +161,7 @@ namespace BlackJack
         {
             for (int i = 0; i < gameService.Players.Count; ++i)
             {
-                MainView.ShowUserScore(gameService.Players[i]);
+                MainView.ShowUserScore(gameService.Players[i] as User);
                 SetArtificialWaiting();
             }
 
@@ -196,9 +200,9 @@ namespace BlackJack
             }
         }
 
-        private void ShowWinners(List<User>users)
+        private void ShowWinners(List<User> users)
         {
-            for(int i=0;i<users.Count;++i)
+            for (int i = 0; i < users.Count; ++i)
             {
                 MainView.ShowUserWon(users[i]);
             }
@@ -222,7 +226,25 @@ namespace BlackJack
 
         private void SetArtificialWaiting()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(200);
+        }
+
+        public User Authorize()
+        {
+            User player;
+            do
+            {
+                string login;
+                string password;
+                MainView.GetLoginAndPassword(out login, out password);
+                Profile profile = new Profile(login, password);
+                player = gameService.BasicService.GetPlayerByProfile(profile);
+                if (player == null) MainView.IncorrectLoginOrPassword();
+
+            } while (player == null);
+
+            MainView.WelcomeUser(player.Name);
+            return player;
         }
     }
 }

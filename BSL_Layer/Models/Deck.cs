@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BSL_Layer.Interfaces;
 using HelpfulValues.Constants;
 
 namespace BSL_Layer.Models
 {
     public class Deck
     {
-        public List<Card> Cards = new List<Card>(Deck_Constants.CARDS_COUNT);
+        public List<ICard> Cards = new List<ICard>(Deck_Constants.CARDS_COUNT);
 
-        public Card TakeCard()
+        public ICard TakeCard()
         {
-            Card card = this.Cards.First();
+            ICard card = this.Cards.First();
             this.Cards.Remove(this.Cards.First());
 
             return card;

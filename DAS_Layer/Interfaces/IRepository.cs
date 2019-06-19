@@ -10,5 +10,6 @@ namespace DA_Layer.Interfaces
     {
         IEnumerable<T> GetAll();
         void Create(T item);
+        T Get(T item);
     }
 }

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using BSL_Layer.Interfaces;
 using BSL_Layer.Models;
 using DA_Layer;
-using DA_Layer.Repositories;
-using HelpfulValues.Constants;
 
 namespace BSL_Layer.Services
 {

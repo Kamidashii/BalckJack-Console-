@@ -1,9 +1,6 @@
-﻿using BSL_Layer.Interfaces;
-using System;
+﻿using System;
+using BSL_Layer.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSL_Layer.Models
 {

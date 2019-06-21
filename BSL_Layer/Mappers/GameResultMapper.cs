@@ -5,61 +5,61 @@ namespace BlackJack_BSL.Mappers
 {
     public class GameResultMapper: Interfaces.IMapper<BlackJack_BSL.Models.GameResult,BlackJack_DA.Models.GameResult>
     {
-        private UserMapper userMapper;
-        private CroupierMapper croupierMapper;
+        private UserMapper _userMapper;
+        private CroupierMapper _croupierMapper;
 
         public GameResultMapper()
         {
-            userMapper = new UserMapper();
-            croupierMapper = new CroupierMapper();
+            _userMapper = new UserMapper();
+            _croupierMapper = new CroupierMapper();
         }
 
-        public BlackJack_BSL.Models.GameResult ConvertItemToBSL(BlackJack_DA.Models.GameResult DAresult)
+        public BlackJack_BSL.Models.GameResult ConvertItemToBusinessLogic(BlackJack_DA.Models.GameResult DataAccessresult)
         {
-            BlackJack_BSL.Models.GameResult BSLResult = new Models.GameResult(
-                DAresult.GameId,
-                DAresult.AllGamesCount,
-                ConvertUsersListToBSL(DAresult.Winners),
-                ConvertUsersListToBSL(DAresult.Losers),
-                ConvertUsersListToBSL(DAresult.Draws),
-                croupierMapper.ConvertItemToBSL(DAresult.Croupier));
+            BlackJack_BSL.Models.GameResult BusinessLogicResult = new Models.GameResult(
+                DataAccessresult.GameId,
+                DataAccessresult.AllGamesCount,
+                ConvertUsersListToBSL(DataAccessresult.Winners),
+                ConvertUsersListToBSL(DataAccessresult.Losers),
+                ConvertUsersListToBSL(DataAccessresult.Draws),
+                _croupierMapper.ConvertItemToBusinessLogic(DataAccessresult.Croupier));
 
-            return BSLResult;
+            return BusinessLogicResult;
         }
 
-        public BlackJack_DA.Models.GameResult ConvertItemToDA(BlackJack_BSL.Models.GameResult BSLResult)
+        public BlackJack_DA.Models.GameResult ConvertItemToDataAccess(BlackJack_BSL.Models.GameResult BusinessLogicResult)
         {
-            BlackJack_DA.Models.GameResult DAResult = new BlackJack_DA.Models.GameResult(BSLResult.GameId,
-               BSLResult.AllGamesCount,
-               ConvertUsersToDA(BSLResult.Winners),
-               ConvertUsersToDA(BSLResult.Losers),
-               ConvertUsersToDA(BSLResult.Draws),
-               croupierMapper.ConvertItemToDA(BSLResult.Croupier));
+            BlackJack_DA.Models.GameResult DataAccessResult = new BlackJack_DA.Models.GameResult(BusinessLogicResult.GameId,
+               BusinessLogicResult.AllGamesCount,
+               ConvertUsersToDA(BusinessLogicResult.Winners),
+               ConvertUsersToDA(BusinessLogicResult.Losers),
+               ConvertUsersToDA(BusinessLogicResult.Draws),
+               _croupierMapper.ConvertItemToDataAccess(BusinessLogicResult.Croupier));
 
-            return DAResult;
+            return DataAccessResult;
         }
 
-        private List<BlackJack_BSL.Interfaces.IUser> ConvertUsersListToBSL(List<BlackJack_DA.Models.User> DAUsersList)
+        private List<BlackJack_BSL.Interfaces.Models.IUser> ConvertUsersListToBSL(List<BlackJack_DA.Models.User> DataAccessUsersList)
         {
-            List<BlackJack_BSL.Interfaces.IUser> BSLUsersList = new List<BlackJack_BSL.Interfaces.IUser>();
+            List<BlackJack_BSL.Interfaces.Models.IUser> BusinessLogicUsersList = new List<BlackJack_BSL.Interfaces.Models.IUser>();
 
-            for (int i = 0; i < DAUsersList.Count; ++i)
+            for (int i = 0; i < DataAccessUsersList.Count; ++i)
             {
-                BSLUsersList.Add(userMapper.ConvertItemToBSL(DAUsersList[i]));
+                BusinessLogicUsersList.Add(_userMapper.ConvertItemToBusinessLogic(DataAccessUsersList[i]));
             }
 
-            return BSLUsersList;
+            return BusinessLogicUsersList;
         }
-        private List<BlackJack_DA.Models.User> ConvertUsersToDA(List<BlackJack_BSL.Interfaces.IUser> BSLUsersList)
+        private List<BlackJack_DA.Models.User> ConvertUsersToDA(List<BlackJack_BSL.Interfaces.Models.IUser> BusinessLogicUsersList)
         {
-            List<BlackJack_DA.Models.User> DAUsersList = new List<BlackJack_DA.Models.User>();
+            List<BlackJack_DA.Models.User> DataAccessUsersList = new List<BlackJack_DA.Models.User>();
 
-            for (int i = 0; i < BSLUsersList.Count; ++i)
+            for (int i = 0; i < BusinessLogicUsersList.Count; ++i)
             {
-                DAUsersList.Add(userMapper.ConvertItemToDA(BSLUsersList[i]));
+                DataAccessUsersList.Add(_userMapper.ConvertItemToDataAccess(BusinessLogicUsersList[i]));
             }
 
-            return DAUsersList;
+            return DataAccessUsersList;
         }
     }
 }

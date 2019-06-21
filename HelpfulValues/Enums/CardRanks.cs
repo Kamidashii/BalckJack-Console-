@@ -18,7 +18,7 @@ namespace Common.Enums
             Jack = 9,
             Queen = 10,
             King = 11,
-            Ace = 11
+            Ace = 12
         }
     }
 }

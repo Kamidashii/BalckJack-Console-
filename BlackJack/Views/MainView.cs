@@ -1,4 +1,5 @@
 ﻿using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Interfaces.Models;
 using BlackJack_BSL.Models;
 using Common.Constants;
 using Common.Enums;
@@ -11,12 +12,8 @@ namespace Views
 {
     public class MainView
     {
-        #region Players
 
-
-        #region User
-
-        public static void ShowUserTurn(User user)
+        public static void ShowUserTurn(IUser user)
         {
             Console.WriteLine($"\nUser {user.Name} get a turn");
         }
@@ -58,7 +55,7 @@ namespace Views
             Console.WriteLine($"{user.Name} taked {GetCardInfo(user.Cards.Last())})");
         }
 
-        public static void ShowBotSpecificCardGetting(Bot bot)
+        public static void ShowBotSpecificCardGetting(IBot bot)
         {
             Console.WriteLine($"{bot.Name} taked {GetCardInfo(bot.Cards.Last())})");
         }
@@ -67,10 +64,7 @@ namespace Views
         {
             Console.WriteLine($"\nUser {user.Name}'s score now is: {user.Score}\n");
         }
-
-        #endregion
-
-        #region Croupier
+        
 
         public static void ShowCroupierScore(IPlayer croupier)
         {
@@ -86,22 +80,18 @@ namespace Views
         {
             Console.WriteLine("Croupier taked a card");
         }
+        
+        
 
-        #endregion
-
-        #region Bot
-
-        public static void ShowBotTurn(Bot bot)
+        public static void ShowBotTurn(IBot bot)
         {
             Console.WriteLine($"\nBot {bot.Name} get a turn");
         }
 
-        public static void ShowBotCardGetting(Bot bot)
+        public static void ShowBotCardGetting(IBot bot)
         {
             Console.WriteLine($"Bot {bot.Name} taked a card");
         }
-
-        #endregion
 
         public static void ShowOverfeedScoreMessage(IUser user)
         {
@@ -112,9 +102,6 @@ namespace Views
         {
             Console.WriteLine($"{user.Name} have a great score!");
         }
-
-        #endregion
-
         public static void ShowInvalidChoose()
         {
             Console.WriteLine("Invalid choose!");

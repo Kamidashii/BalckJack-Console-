@@ -4,18 +4,18 @@ namespace BlackJack_BSL.Mappers
 {
     public class CroupierMapper:PlayerMapper, Interfaces.IMapper<BlackJack_BSL.Models.Croupier,BlackJack_DA.Models.Croupier>
     {
-        public BlackJack_BSL.Models.Croupier ConvertItemToBSL(BlackJack_DA.Models.Croupier DACroupier)
+        public BlackJack_BSL.Models.Croupier ConvertItemToBusinessLogic(BlackJack_DA.Models.Croupier DataAccessCroupier)
         {
-            BlackJack_BSL.Models.Croupier BSLCroupier = new BlackJack_BSL.Models.Croupier(DACroupier.Score, ConvertCardsToBSL(DACroupier.Cards));
+            BlackJack_BSL.Models.Croupier BusinessLogicCroupier = new BlackJack_BSL.Models.Croupier(DataAccessCroupier.Score, ConvertCardsToBusinessLogic(DataAccessCroupier.Cards));
 
-            return BSLCroupier;
+            return BusinessLogicCroupier;
         }
 
-        public BlackJack_DA.Models.Croupier ConvertItemToDA(BlackJack_BSL.Models.Croupier BSLCroupier)
+        public BlackJack_DA.Models.Croupier ConvertItemToDataAccess(BlackJack_BSL.Models.Croupier BusinessLogicCroupier)
         {
-            BlackJack_DA.Models.Croupier DACroupier = new BlackJack_DA.Models.Croupier(BSLCroupier.Score, ConvertCardsToDA(BSLCroupier.Cards));
+            BlackJack_DA.Models.Croupier DataAccessCroupier = new BlackJack_DA.Models.Croupier(BusinessLogicCroupier.Score, ConvertCardsToDataAccess(BusinessLogicCroupier.Cards));
 
-            return DACroupier;
+            return DataAccessCroupier;
         }
     }
 }

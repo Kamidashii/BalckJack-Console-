@@ -2,56 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Interfaces.Models;
+using BlackJack_BSL.Interfaces.Services;
+using BlackJack_BSL.Mappers;
 using BlackJack_BSL.Models;
 using BlackJack_DA;
 
 namespace BlackJack_BSL.Services
 {
-    public class GameService
+    public class GameService:IGameService
     {
-        #region Services
-        public BasicService BasicService { get; private set; }
-        public BotService BotService { get; private set; }
-        public UserService UserService { get; private set; }
-        public CroupierService CroupierService { get; private set; }
-        public DeckService DeckService { get; private set; }
-        public JsonService JSonService { get; private set; }
-        #endregion
+        
+        private int _decksCount;
 
-        private List<IUser> players;
-        private List<Deck> decks;
-        private IPlayer croupier;
 
-        public List<IUser> Players { get { return this.players; } }
-        public IPlayer Croupier { get { return this.croupier; } }
+        public IBasicService BasicService { get; set; }
+        public IBotService BotService { get; set; }
+        public IBasicService UserService { get; set; }
+        public ICroupierService CroupierService { get; set; }
+        public IDeckService DeckService{ get; set; }
+        public BlackJack_DA.Interfaces.IJsonService JSonService { get; set; }
 
-        private int decksCount;
+        public List<Interfaces.Models.IUser> Players { get; set; }
+        public Interfaces.Models.IPlayer Croupier { get; set; }
+        public List<IDeck> Decks { get; set; }
 
-        public int gamesCount;
-        public int gameId;
+        public int GamesCount { get; set; }
+        public int GameId { get; set; }
 
-        public GameService(List<IUser> players, IPlayer croupier, int gamesCount, int decksCount)
+        public GameService(List<Interfaces.Models.IUser> players, Interfaces.Models.IPlayer croupier, int gamesCount, int decksCount)
         {
-            this.players = players;
-            this.croupier = croupier;
-            this.decks = new List<Deck>(decksCount);
-            InitializeServices();
+            this.JSonService = new JsonService();
+            this.DeckService = new DeckService();
+
+            this.Players = players;
+            this.Croupier = croupier;
+            this.Decks = new List<IDeck>(decksCount);
 
             GenerateDecks(decksCount);
-            this.decksCount = decksCount;
+            this._decksCount = decksCount;
 
-            this.gamesCount = gamesCount;
-            gameId = 0;
+            this.GamesCount = gamesCount;
         }
 
-        private void InitializeServices()
+        public void SetServices(IBasicService basicService,IBotService botService,IBasicService userService,ICroupierService croupierService)
         {
-            this.BasicService = new BasicService(players, decks, croupier);
-            this.BotService = new BotService(players, decks, croupier);
-            this.UserService = new UserService(players, decks, croupier);
-            this.CroupierService = new CroupierService(players, decks, croupier);
-            this.DeckService = new DeckService();
-            this.JSonService = new JsonService();
+            this.BasicService = basicService;
+            this.BotService = botService;
+            this.UserService = userService;
+            this.CroupierService = croupierService;
         }
 
         public void SaveResults()
@@ -61,106 +60,106 @@ namespace BlackJack_BSL.Services
 
         public List<GameResult> LoadResults()
         {
-            List<BlackJack_DA.Models.GameResult> DAresults = this.JSonService.GameResultsRepository.GetAll().ToList();
+            List<BlackJack_DA.Models.GameResult> DataAccessResults = this.JSonService.GameResultsRepository.GetAll().ToList();
 
-            List<BlackJack_BSL.Models.GameResult> BSLresults = new List<GameResult>();
+            List<BlackJack_BSL.Models.GameResult> BusinessLogicResults = new List<GameResult>();
 
-            for (int i = 0; i < DAresults.Count; ++i)
+            for (int i = 0; i < DataAccessResults.Count; ++i)
             {
-                BSLresults.Add(BasicService.GameResultMapper.ConvertItemToBSL(DAresults[i]));
+                BusinessLogicResults.Add(BasicService.GameResultMapper.ConvertItemToBusinessLogic(DataAccessResults[i]));
             }
 
-            return BSLresults;
+            return BusinessLogicResults;
         }
 
         private void GenerateDecks(int decksCount)
         {
             for (int i = 0; i < decksCount; ++i)
             {
-                Deck deck = new Deck();
+                IDeck deck = new Deck();
                 DeckService.SetAllCards(deck);
                 DeckService.ShuffleCards(deck);
 
-                this.decks.Add(deck);
+                Decks.Add(deck);
             }
         }
-        
+
         public GameResult CheckWinners()
         {
-            GameResult gameResult = new GameResult(gameId);
-            gameResult.AllGamesCount = this.gamesCount;
+            GameResult gameResult = new GameResult(GameId);
+            gameResult.AllGamesCount = this.GamesCount;
 
-            for (int i = 0; i < this.players.Count; ++i)
+            for (int i = 0; i < this.Players.Count; ++i)
             {
-                if (BasicService.IsPlayerWonScore(players[i]) && BasicService.IsPlayerWonScore(croupier))
+                if (BasicService.IsPlayerWonScore(Players[i]) && BasicService.IsPlayerWonScore(Croupier))
                 {
-                    UserDraw(players[i], gameResult);
+                    UserDraw(Players[i], gameResult);
                 }
 
-                else if (!BasicService.IsPlayerScoreValid(players[i]) || (players[i].Score <= croupier.Score && BasicService.IsPlayerScoreValid(croupier)))
+                else if (!BasicService.IsPlayerScoreValid(Players[i]) || (Players[i].Score <= Croupier.Score && BasicService.IsPlayerScoreValid(Croupier)))
                 {
-                    UserLost(players[i], gameResult);
+                    UserLost(Players[i], gameResult);
                 }
 
-                else if (players[i].Score > croupier.Score || !BasicService.IsPlayerScoreValid(croupier))
+                else if (Players[i].Score > Croupier.Score || !BasicService.IsPlayerScoreValid(Croupier))
                 {
-                    UserWon(players[i], gameResult);
+                    UserWon(Players[i], gameResult);
                 }
             }
-            gameResult.Croupier = CroupierService.MakePlayerClone(croupier as Player) as Croupier;
-            this.JSonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDA(gameResult));
-            gameId++;
+            gameResult.Croupier = CroupierService.MakePlayerClone(Croupier as Player) as Croupier;
+            this.JSonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDataAccess(gameResult));
+            GameId++;
 
             return gameResult;
         }
 
         public void GiveFirstCards()
         {
-            for (int i = 0; i < players.Count; ++i)
+            for (int i = 0; i < Players.Count; ++i)
             {
                 for (int j = 0; j < 2; ++j)
                 {
-                    UserService.PlayerGetCard(players[i], BasicService.PullOutCard());
-                    BasicService.RecalculateScore(this.players[i]);
+                    UserService.PlayerGetCard(Players[i], BasicService.PullOutCard());
+                    BasicService.RecalculateScore(this.Players[i]);
                 }
             }
 
-            CroupierService.PlayerGetCard(croupier, BasicService.PullOutCard());
+            CroupierService.PlayerGetCard(Croupier, BasicService.PullOutCard());
         }
 
-        private void UserWon(IPlayer user, GameResult gameResult)
+        private void UserWon(Interfaces.Models.IPlayer user, GameResult gameResult)
         {
             if (user.IsBot)
             {
-                gameResult.Winners.Add(BotService.MakePlayerClone(user as Player) as Bot);
+                gameResult.Winners.Add(BotService.MakePlayerClone(user) as IBot);
             }
-            else
+            else if (!user.IsBot)
             {
-                gameResult.Winners.Add(UserService.MakePlayerClone(user as Player) as User);
-            }
-        }
-
-        private void UserLost(IPlayer user, GameResult gameResult)
-        {
-            if (user.IsBot)
-            {
-                gameResult.Losers.Add(BotService.MakePlayerClone(user as Player) as Bot);
-            }
-            else
-            {
-                gameResult.Losers.Add(UserService.MakePlayerClone(user as Player) as User);
+                gameResult.Winners.Add(UserService.MakePlayerClone(user) as IUser);
             }
         }
 
-        private void UserDraw(IPlayer user, GameResult gameResult)
+        private void UserLost(Interfaces.Models.IPlayer user, GameResult gameResult)
         {
             if (user.IsBot)
             {
-                gameResult.Draws.Add(BotService.MakePlayerClone(user as Player) as Bot);
+                gameResult.Losers.Add(BotService.MakePlayerClone(user) as IBot);
             }
-            else
+            else if (!user.IsBot)
             {
-                gameResult.Draws.Add(UserService.MakePlayerClone(user as Player) as User);
+                gameResult.Losers.Add(UserService.MakePlayerClone(user) as IUser);
+            }
+        }
+
+        private void UserDraw(Interfaces.Models.IPlayer user, GameResult gameResult)
+        {
+            if (user.IsBot)
+            {
+                gameResult.Draws.Add(BotService.MakePlayerClone(user) as IBot);
+            }
+            else if (!user.IsBot)
+            {
+                //gameResult.Draws.Add(UserService.MakePlayerClone(user) as IUser);
             }
         }
 
@@ -168,26 +167,23 @@ namespace BlackJack_BSL.Services
 
         private void ResetDecks()
         {
-            GenerateDecks(decksCount);
+            GenerateDecks(_decksCount);
         }
 
 
         public void ResetGameData()
         {
-            for (int i = 0; i < this.players.Count; ++i)
+            for (int i = 0; i < this.Players.Count; ++i)
             {
-                BasicService.ResetPlayerScore(this.players[i]);
-                BasicService.ResetPlayerDeck(this.players[i]);
+                BasicService.ResetPlayerScore(this.Players[i]);
+                BasicService.ResetPlayerDeck(this.Players[i]);
             }
 
-            BasicService.ResetPlayerScore(this.croupier);
-            BasicService.ResetPlayerDeck(this.croupier);
+            BasicService.ResetPlayerScore(this.Croupier);
+            BasicService.ResetPlayerDeck(this.Croupier);
 
 
             ResetDecks();
         }
-
-
-
     }
 }

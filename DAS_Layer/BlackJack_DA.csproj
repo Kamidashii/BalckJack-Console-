@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\IJsonService.cs" />
     <Compile Include="Models\Ace.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\Card.cs" />

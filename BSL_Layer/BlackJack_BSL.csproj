@@ -41,13 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ICard.cs" />
-    <Compile Include="Interfaces\IDeck.cs" />
+    <Compile Include="Interfaces\Models\IAce.cs" />
+    <Compile Include="Interfaces\Models\IBot.cs" />
+    <Compile Include="Interfaces\Models\ICard.cs" />
+    <Compile Include="Interfaces\Models\IDeck.cs" />
     <Compile Include="Interfaces\IMapper.cs" />
-    <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Interfaces\IPlayerService.cs" />
-    <Compile Include="Interfaces\IProfile.cs" />
-    <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="Interfaces\Models\IPlayer.cs" />
+    <Compile Include="Interfaces\Services\IBasicService.cs" />
+    <Compile Include="Interfaces\Services\IBotService.cs" />
+    <Compile Include="Interfaces\Services\ICroupierService.cs" />
+    <Compile Include="Interfaces\Services\IDeckService.cs" />
+    <Compile Include="Interfaces\Services\IGameService.cs" />
+    <Compile Include="Interfaces\Services\IPlayerService.cs" />
+    <Compile Include="Interfaces\Models\IProfile.cs" />
+    <Compile Include="Interfaces\Models\IUser.cs" />
     <Compile Include="Mappers\AceMapper.cs" />
     <Compile Include="Mappers\BotMapper.cs" />
     <Compile Include="Mappers\CardMapper.cs" />

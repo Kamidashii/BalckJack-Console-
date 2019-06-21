@@ -1,13 +1,15 @@
 ﻿using System;
 using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Interfaces.Models;
+using BlackJack_BSL.Interfaces.Services;
 using BlackJack_BSL.Models;
 using Common.Enums;
 
 namespace BlackJack_BSL.Services
 {
-    public class DeckService
+    public class DeckService:IDeckService
     {
-        public void SetAllCards(Deck deck)
+        public void SetAllCards(IDeck deck)
         {
             var suits = Enum.GetValues(typeof(CardSuits.CardSuit));
             var ranks = Enum.GetValues(typeof(CardRanks.CardRank));
@@ -19,22 +21,25 @@ namespace BlackJack_BSL.Services
                     CardSuits.CardSuit suit = (CardSuits.CardSuit)suits.GetValue(i);
                     CardRanks.CardRank rank = (CardRanks.CardRank)ranks.GetValue(j);
 
-                    ICard card;
-                    if (rank == CardRanks.CardRank.Ace)
-                    {
-                        card = new Ace(rank, suit);
-                    }
-                    else
-                    {
-                        card = new Card(rank, suit);
-                    }
+                    Interfaces.Models.ICard card;
+                    CheckAce(out card, suit, rank);
 
                     deck.Cards.Add(card);
                 }
             }
         }
 
-        public void ShuffleCards(Deck deck)
+        private void CheckAce(out Interfaces.Models.ICard card, CardSuits.CardSuit suit, CardRanks.CardRank rank)
+        {
+            if (rank == CardRanks.CardRank.Ace)
+            {
+                card = new Ace(rank, suit);
+                return;
+            }
+            card = new Card(rank, suit);
+        }
+
+        public void ShuffleCards(IDeck deck)
         {
             Random random = new Random();
             int count = deck.Cards.Count;

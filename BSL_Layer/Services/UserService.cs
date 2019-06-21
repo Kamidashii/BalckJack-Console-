@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Interfaces.Models;
 using BlackJack_BSL.Models;
 
 
@@ -8,13 +8,13 @@ namespace BlackJack_BSL.Services
 {
     public class UserService : BasicService
     {
-        public UserService(List<IUser> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier) { }
+        public UserService(List<Interfaces.Models.IUser> players, List<IDeck> decks, Interfaces.Models.IPlayer croupier) : base(players, decks, croupier) { }
         
 
-        public override IPlayer MakePlayerClone(IPlayer original)
+        public override Interfaces.Models.IPlayer MakePlayerClone(Interfaces.Models.IPlayer original)
         {
-            IUser origin = original as User;
-            IUser copy = new User(origin.Name, origin.Bet, origin.Score, origin.Cards,false);
+            Interfaces.Models.IUser origin = original as IUser;
+            Interfaces.Models.IUser copy = new User(origin.Name, origin.Bet, origin.Score, origin.Cards,false);
             return copy;
         }
     }

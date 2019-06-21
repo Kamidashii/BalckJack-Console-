@@ -4,13 +4,11 @@ using Common.Enums;
 
 namespace BlackJack_BSL.Models
 {
-    public class Card:ICard
+    public class Card: Interfaces.Models.ICard
     {
         public CardRanks.CardRank Rank { get; set; }
         public CardSuits.CardSuit Suit { get; set; }
-        public int Cost { get { return this.cost; } }
-
-        private int cost;
+        public int Cost { get; private set; }
 
         public Card(CardRanks.CardRank rank, CardSuits.CardSuit suit)
         {
@@ -23,59 +21,55 @@ namespace BlackJack_BSL.Models
         {
             if (Rank == CardRanks.CardRank.Two)
             {
-                this.cost = 2;
+                this.Cost = 2;
             }
             else if (Rank == CardRanks.CardRank.Three)
             {
-                this.cost = 3;
+                this.Cost = 3;
             }
             else if (Rank == CardRanks.CardRank.Four)
             {
-                this.cost = 4;
+                this.Cost = 4;
             }
             else if (Rank == CardRanks.CardRank.Five)
             {
-                this.cost = 5;
+                this.Cost = 5;
             }
             else if (Rank == CardRanks.CardRank.Six)
             {
-                this.cost = 6;
+                this.Cost = 6;
             }
             else if (Rank == CardRanks.CardRank.Seven)
             {
-                this.cost = 7;
+                this.Cost = 7;
             }
             else if (Rank == CardRanks.CardRank.Eight)
             {
-                this.cost = 8;
+                this.Cost = 8;
             }
             else if (Rank == CardRanks.CardRank.Nine)
             {
-                this.cost = 9;
+                this.Cost = 9;
             }
             else if (Rank == CardRanks.CardRank.Ten)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
             else if (Rank == CardRanks.CardRank.Jack)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
             else if (Rank == CardRanks.CardRank.Queen)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
             else if (Rank == CardRanks.CardRank.King)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
             else if (Rank == CardRanks.CardRank.Ace)
             {
-                this.cost = 11;
-            }
-            else
-            {
-                this.cost = 0;
+                this.Cost = 11;
             }
         }
         

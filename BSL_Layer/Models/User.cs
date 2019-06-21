@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BlackJack_BSL.Models
 {
-    public class User : Player,IUser
+    public class User : Player, Interfaces.Models.IUser
     {
         public int Bet { get; set; }
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace BlackJack_BSL.Models
         }
 
 
-        public User(string name, int bet, int score, List<ICard> cards,bool isBot)
+        public User(string name, int bet, int score, List<Interfaces.Models.ICard> cards,bool isBot)
         {
             this.Name = name;
             this.Bet = bet;

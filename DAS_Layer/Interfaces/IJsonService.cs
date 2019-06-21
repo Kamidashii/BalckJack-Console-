@@ -3,7 +3,7 @@ using BlackJack_DA.Models;
 
 namespace BlackJack_DA.Interfaces
 {
-    public interface IDataService
+    public interface IJsonService
     {
         IRepository<GameResult> GameResultsRepository { get; }
         IRepository<Profile> ProfilesRepository { get; }

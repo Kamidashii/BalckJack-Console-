@@ -5,9 +5,9 @@ using Common.Enums;
 
 namespace BlackJack_BSL.Models
 {
-    public class Bot : User
+    public class Bot : User, Interfaces.Models.IBot
     {
-        public BotDemeanors.BotDemeanor Demeanor;
+        public BotDemeanors.BotDemeanor Demeanor { get; set; }
 
 
         public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor) : base(name, bet)
@@ -16,7 +16,7 @@ namespace BlackJack_BSL.Models
             this.IsBot = true;
         }
 
-        public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor, int score, List<ICard> cards,bool isBot) : base(name, bet)
+        public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor, int score, List<Interfaces.Models.ICard> cards,bool isBot) : base(name, bet)
         {
             this.Score = score;
             this.Cards = cards;

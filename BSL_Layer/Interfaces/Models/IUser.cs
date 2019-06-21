@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlackJack_BSL.Interfaces
+namespace BlackJack_BSL.Interfaces.Models
 {
     public interface IUser:IPlayer
     {

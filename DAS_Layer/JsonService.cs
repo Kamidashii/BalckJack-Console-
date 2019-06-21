@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace BlackJack_DA
 {
-    public class JsonService : IDataService
+    public class JsonService : IJsonService
     {
         private GameResultsRepository gameResultsRepository;
         private ProfilesRepository profilesRepository;

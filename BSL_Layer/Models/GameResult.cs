@@ -9,9 +9,9 @@ namespace BlackJack_BSL.Models
         public int GameId;
         public int AllGamesCount;
 
-        public List<IUser> Winners;
-        public List<IUser> Losers;
-        public List<IUser> Draws;
+        public List<Interfaces.Models.IUser> Winners;
+        public List<Interfaces.Models.IUser> Losers;
+        public List<Interfaces.Models.IUser> Draws;
 
         public Croupier Croupier;
 
@@ -20,12 +20,12 @@ namespace BlackJack_BSL.Models
         {
             this.GameId = gameId;
 
-            this.Winners = new List<IUser>();
-            this.Losers = new List<IUser>();
-            this.Draws = new List<IUser>();
+            this.Winners = new List<Interfaces.Models.IUser>();
+            this.Losers = new List<Interfaces.Models.IUser>();
+            this.Draws = new List<Interfaces.Models.IUser>();
         }
 
-        public GameResult(int gameId,int allGamesCount,List<IUser> winners,List<IUser>losers,List<IUser>draws,Croupier croupier)
+        public GameResult(int gameId,int allGamesCount,List<Interfaces.Models.IUser> winners,List<Interfaces.Models.IUser>losers,List<Interfaces.Models.IUser>draws,Croupier croupier)
         {
             this.GameId = gameId;
             this.AllGamesCount = allGamesCount;

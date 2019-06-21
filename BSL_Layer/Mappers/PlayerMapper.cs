@@ -5,34 +5,34 @@ namespace BlackJack_BSL.Mappers
 {
     public abstract class PlayerMapper
     {
-        CardMapper cardMapper;
+        private CardMapper _cardMapper;
 
         public PlayerMapper()
         {
-            this.cardMapper = new CardMapper();
+            this._cardMapper = new CardMapper();
         }
-        protected List<BlackJack_DA.Models.Card> ConvertCardsToDA(List<BlackJack_BSL.Interfaces.ICard> BSLCards)
+        protected List<BlackJack_DA.Models.Card> ConvertCardsToDataAccess(List<BlackJack_BSL.Interfaces.Models.ICard> BusinessLogicCards)
         {
-            List<BlackJack_DA.Models.Card> DACards = new List<BlackJack_DA.Models.Card>();
+            List<BlackJack_DA.Models.Card> DataAccessCards = new List<BlackJack_DA.Models.Card>();
 
-            for (int i = 0; i < BSLCards.Count; ++i)
+            for (int i = 0; i < BusinessLogicCards.Count; ++i)
             {
-                DACards.Add(cardMapper.ConvertItemToDA(BSLCards[i]));
+                DataAccessCards.Add(_cardMapper.ConvertItemToDataAccess(BusinessLogicCards[i]));
             }
 
-            return DACards;
+            return DataAccessCards;
         }
 
-        protected List<BlackJack_BSL.Interfaces.ICard> ConvertCardsToBSL(List<BlackJack_DA.Models.Card> DACards)
+        protected List<BlackJack_BSL.Interfaces.Models.ICard> ConvertCardsToBusinessLogic(List<BlackJack_DA.Models.Card> DataAccessCards)
         {
-            List<BlackJack_BSL.Interfaces.ICard> BSLCards = new List<Interfaces.ICard>();
+            List<BlackJack_BSL.Interfaces.Models.ICard> BusinessLogicCards = new List<Interfaces.Models.ICard>();
 
-            for (int i = 0; i < DACards.Count; ++i)
+            for (int i = 0; i < DataAccessCards.Count; ++i)
             {
-                BSLCards.Add(cardMapper.ConvertItemToBSL(DACards[i]));
+                BusinessLogicCards.Add(_cardMapper.ConvertItemToBusinessLogic(DataAccessCards[i]));
             }
 
-            return BSLCards;
+            return BusinessLogicCards;
         }
     }
 }

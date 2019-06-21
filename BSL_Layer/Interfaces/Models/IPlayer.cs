@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlackJack_BSL.Interfaces
+namespace BlackJack_BSL.Interfaces.Models
 {
     public interface IPlayer
     {

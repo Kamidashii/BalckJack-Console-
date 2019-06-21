@@ -12,7 +12,7 @@ namespace BlackJack_BSL.Models
         }
         
 
-        public Croupier(int score, List<ICard> cards)
+        public Croupier(int score, List<Interfaces.Models.ICard> cards)
         {
             this.Score = score;
             this.Cards = cards;

@@ -2,20 +2,20 @@
 
 namespace BlackJack_BSL.Mappers
 {
-    public class UserMapper:PlayerMapper, Interfaces.IMapper<BlackJack_BSL.Interfaces.IUser,BlackJack_DA.Models.User>
+    public class UserMapper:PlayerMapper, Interfaces.IMapper<BlackJack_BSL.Interfaces.Models.IUser,BlackJack_DA.Models.User>
     {
-        public BlackJack_BSL.Interfaces.IUser ConvertItemToBSL(BlackJack_DA.Models.User DAUser)
+        public BlackJack_BSL.Interfaces.Models.IUser ConvertItemToBusinessLogic(BlackJack_DA.Models.User DataAccessUser)
         {
-            BlackJack_BSL.Models.User BSLUser = new Models.User(DAUser.Name, DAUser.Bet, DAUser.Score, ConvertCardsToBSL(DAUser.Cards),DAUser.IsBot);
+            BlackJack_BSL.Models.User BusinessLogicUser = new Models.User(DataAccessUser.Name, DataAccessUser.Bet, DataAccessUser.Score, ConvertCardsToBusinessLogic(DataAccessUser.Cards),DataAccessUser.IsBot);
 
-            return BSLUser;
+            return BusinessLogicUser;
         }
 
-        public BlackJack_DA.Models.User ConvertItemToDA(BlackJack_BSL.Interfaces.IUser BSLUser)
+        public BlackJack_DA.Models.User ConvertItemToDataAccess(BlackJack_BSL.Interfaces.Models.IUser BusinessLogicUser)
         {
-            BlackJack_DA.Models.User DAUser = new BlackJack_DA.Models.User(BSLUser.Name, BSLUser.Bet, BSLUser.Score, ConvertCardsToDA(BSLUser.Cards),BSLUser.IsBot);
+            BlackJack_DA.Models.User DataAccessUser = new BlackJack_DA.Models.User(BusinessLogicUser.Name, BusinessLogicUser.Bet, BusinessLogicUser.Score, ConvertCardsToDataAccess(BusinessLogicUser.Cards),BusinessLogicUser.IsBot);
 
-            return DAUser;
+            return DataAccessUser;
         }
     }
 }

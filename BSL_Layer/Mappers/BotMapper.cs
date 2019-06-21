@@ -4,16 +4,16 @@ namespace BlackJack_BSL.Mappers
 {
     public class BotMapper:PlayerMapper, Interfaces.IMapper<BlackJack_BSL.Models.Bot,BlackJack_DA.Models.Bot>
     {
-        public BlackJack_BSL.Models.Bot ConvertItemToBSL(BlackJack_DA.Models.Bot DABot)
+        public BlackJack_BSL.Models.Bot ConvertItemToBusinessLogic(BlackJack_DA.Models.Bot DataAccessBot)
         {
-            BlackJack_BSL.Models.Bot BSLBot = new BlackJack_BSL.Models.Bot(DABot.Name, DABot.Bet,DABot.Demeanor, DABot.Score, ConvertCardsToBSL(DABot.Cards),DABot.IsBot);
+            BlackJack_BSL.Models.Bot BusinessLogicBot = new BlackJack_BSL.Models.Bot(DataAccessBot.Name, DataAccessBot.Bet,DataAccessBot.Demeanor, DataAccessBot.Score, ConvertCardsToBusinessLogic(DataAccessBot.Cards),DataAccessBot.IsBot);
 
-            return BSLBot;
+            return BusinessLogicBot;
         }
 
-        public BlackJack_DA.Models.Bot ConvertItemToDA(BlackJack_BSL.Models.Bot BSLBot)
+        public BlackJack_DA.Models.Bot ConvertItemToDataAccess(BlackJack_BSL.Models.Bot BSLBot)
         {
-            BlackJack_DA.Models.Bot DABot = new BlackJack_DA.Models.Bot(BSLBot.Name, BSLBot.Bet, BSLBot.Demeanor, BSLBot.Score, ConvertCardsToDA(BSLBot.Cards), BSLBot.IsBot);
+            BlackJack_DA.Models.Bot DABot = new BlackJack_DA.Models.Bot(BSLBot.Name, BSLBot.Bet, BSLBot.Demeanor, BSLBot.Score, ConvertCardsToDataAccess(BSLBot.Cards), BSLBot.IsBot);
 
             return DABot;
         }

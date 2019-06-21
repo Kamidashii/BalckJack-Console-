@@ -3,12 +3,12 @@ using BlackJack_BSL.Interfaces;
 
 namespace BlackJack_BSL.Models
 {
-    public class Profile : IProfile
+    public class Profile : Interfaces.Models.IProfile
     {
         public string Login { get; set; }
         public string Password { get; set; }
 
-        public IUser User { get; set; }
+        public Interfaces.Models.IUser User { get; set; }
 
         public Profile(string login, string password)
         {
@@ -16,7 +16,7 @@ namespace BlackJack_BSL.Models
             this.Password = password;
         }
 
-        public Profile(string login, string password, IUser user)
+        public Profile(string login, string password, Interfaces.Models.IUser user)
         {
             this.Login = login;
             this.Password = password;

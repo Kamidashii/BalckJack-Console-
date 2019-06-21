@@ -2,27 +2,27 @@
 
 namespace BlackJack_BSL.Mappers
 {
-    public class ProfileMapper: Interfaces.IMapper<BlackJack_BSL.Interfaces.IProfile,BlackJack_DA.Models.Profile>
+    public class ProfileMapper: Interfaces.IMapper<BlackJack_BSL.Interfaces.Models.IProfile,BlackJack_DA.Models.Profile>
     {
-        private UserMapper userMapper;
+        private UserMapper _userMapper;
 
         public ProfileMapper()
         {
-            this.userMapper = new UserMapper();
+            this._userMapper = new UserMapper();
         }
 
-        public BlackJack_BSL.Interfaces.IProfile ConvertItemToBSL(BlackJack_DA.Models.Profile DAProfile)
+        public BlackJack_BSL.Interfaces.Models.IProfile ConvertItemToBusinessLogic(BlackJack_DA.Models.Profile DataAccessProfile)
         {
-            BlackJack_BSL.Models.Profile BSLProfile = new BlackJack_BSL.Models.Profile(DAProfile.Login, DAProfile.Password, userMapper.ConvertItemToBSL(DAProfile.User));
+            BlackJack_BSL.Models.Profile BusinessLogicProfile = new BlackJack_BSL.Models.Profile(DataAccessProfile.Login, DataAccessProfile.Password, _userMapper.ConvertItemToBusinessLogic(DataAccessProfile.User));
 
-            return BSLProfile;
+            return BusinessLogicProfile;
         }
 
-        public BlackJack_DA.Models.Profile ConvertItemToDA(BlackJack_BSL.Interfaces.IProfile BSLProfile)
+        public BlackJack_DA.Models.Profile ConvertItemToDataAccess(BlackJack_BSL.Interfaces.Models.IProfile BusinessLogicProfile)
         {
-            BlackJack_DA.Models.Profile DAProfile = new BlackJack_DA.Models.Profile(BSLProfile.Login, BSLProfile.Password);
+            BlackJack_DA.Models.Profile DataAccessProfile = new BlackJack_DA.Models.Profile(BusinessLogicProfile.Login, BusinessLogicProfile.Password);
 
-            return DAProfile;
+            return DataAccessProfile;
         }
     }
 }

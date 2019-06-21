@@ -1,8 +1,8 @@
 ﻿using System;
-using BSL_Layer.Interfaces;
+using BlackJack_BSL.Interfaces;
 using System.Collections.Generic;
 
-namespace BSL_Layer.Models
+namespace BlackJack_BSL.Models
 {
     public class Croupier : Player
     {
@@ -17,19 +17,6 @@ namespace BSL_Layer.Models
             this.Score = score;
             this.Cards = cards;
             this.IsBot = true;
-        }
-
-        public Croupier(DA_Layer.Models.Croupier DAcroupier)
-        {
-            this.IsBot = DAcroupier.IsBot;
-            this.Score = DAcroupier.Score;
-            this.Cards=ConvertCardsFromDB(DAcroupier.Cards);
-        }
-
-        public DA_Layer.Models.Croupier GetDBCroupier()
-        {
-            DA_Layer.Models.Croupier user = new DA_Layer.Models.Croupier(this.Score, this.ConvertCardsToDB());
-            return user;
         }
     }
 }

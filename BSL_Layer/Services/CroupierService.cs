@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
-using HelpfulValues.Constants;
+using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
+using Common.Constants;
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class CroupierService : BasicService
     {
-        public CroupierService(List<IPlayer> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier) { }
+        public CroupierService(List<IUser> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier) { }
 
         public void StartCroupierTurn(IPlayer croupier)
         {
@@ -22,7 +22,7 @@ namespace BSL_Layer.Services
                 PlayerGetCard(croupier, PullOutCard());
                 RecalculateScore(croupier);
 
-            } while (croupier.Score < Croupier_Constants.TAKE_UNTIL);
+            } while (croupier.Score < Croupier_Constants.TakeUntil);
         }
 
         public override IPlayer MakePlayerClone(IPlayer original)

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Croupier : Player
     {

@@ -1,91 +1,75 @@
 ﻿using System;
-using BSL_Layer.Interfaces;
-using HelpfulValues.Enums;
+using BlackJack_BSL.Interfaces;
+using Common.Enums;
 
-namespace BSL_Layer.Models
+namespace BlackJack_BSL.Models
 {
     public class Card:ICard
     {
-        public Card_Enums.CardRank Rank { get; set; }
-        public Card_Enums.CardSuit Suit { get; set; }
+        public CardRanks.CardRank Rank { get; set; }
+        public CardSuits.CardSuit Suit { get; set; }
         public int Cost { get { return this.cost; } }
 
         private int cost;
 
-        public Card(Card_Enums.CardRank rank, Card_Enums.CardSuit suit)
+        public Card(CardRanks.CardRank rank, CardSuits.CardSuit suit)
         {
             this.Rank = rank;
             this.Suit = suit;
 
             DefineCost();
         }
-
-        public Card(DA_Layer.Models.Card DAcard)
-        {
-            this.Rank = DAcard.Rank;
-            this.Suit = DAcard.Suit;
-
-            DefineCost();
-        }
-
-        public virtual DA_Layer.Models.Card GetDBCard()
-        {
-            DA_Layer.Models.Card card = new DA_Layer.Models.Card(this.Rank, this.Suit);
-            card.DefineCost();
-            return card;
-        }
-
         public void DefineCost()
         {
-            if (Rank == Card_Enums.CardRank.Two)
+            if (Rank == CardRanks.CardRank.Two)
             {
                 this.cost = 2;
             }
-            else if (Rank == Card_Enums.CardRank.Three)
+            else if (Rank == CardRanks.CardRank.Three)
             {
                 this.cost = 3;
             }
-            else if (Rank == Card_Enums.CardRank.Four)
+            else if (Rank == CardRanks.CardRank.Four)
             {
                 this.cost = 4;
             }
-            else if (Rank == Card_Enums.CardRank.Five)
+            else if (Rank == CardRanks.CardRank.Five)
             {
                 this.cost = 5;
             }
-            else if (Rank == Card_Enums.CardRank.Six)
+            else if (Rank == CardRanks.CardRank.Six)
             {
                 this.cost = 6;
             }
-            else if (Rank == Card_Enums.CardRank.Seven)
+            else if (Rank == CardRanks.CardRank.Seven)
             {
                 this.cost = 7;
             }
-            else if (Rank == Card_Enums.CardRank.Eight)
+            else if (Rank == CardRanks.CardRank.Eight)
             {
                 this.cost = 8;
             }
-            else if (Rank == Card_Enums.CardRank.Nine)
+            else if (Rank == CardRanks.CardRank.Nine)
             {
                 this.cost = 9;
             }
-            else if (Rank == Card_Enums.CardRank.Ten)
+            else if (Rank == CardRanks.CardRank.Ten)
             {
                 this.cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Jack)
+            else if (Rank == CardRanks.CardRank.Jack)
             {
                 this.cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Queen)
+            else if (Rank == CardRanks.CardRank.Queen)
             {
                 this.cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.King)
+            else if (Rank == CardRanks.CardRank.King)
             {
                 this.cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Ace)
+            else if (Rank == CardRanks.CardRank.Ace)
             {
                 this.cost = 11;
             }

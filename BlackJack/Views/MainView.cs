@@ -1,7 +1,7 @@
-﻿using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
-using HelpfulValues.Constants;
-using HelpfulValues.Enums;
+﻿using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
+using Common.Constants;
+using Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,34 +26,34 @@ namespace Views
             Console.WriteLine("\n Choose action: \n 1 - Take a card \n 2 - Enough \n 3 - Surrender \n 4 - ShowCards");
         }
 
-        public static User_Enums.ActionType FindOutUserAction()
+        public static UserActions.ActionType FindOutUserAction()
         {
-            User_Enums.ActionType choosedAction;
+            UserActions.ActionType choosedAction;
             Enum.TryParse(Console.ReadLine(), out choosedAction);
             return choosedAction;
         }
 
-        public static void ShowUserWon(User user)
+        public static void ShowUserWon(IUser user)
         {
-            Console.WriteLine($"\n User {user.Name} has won {user.Bet * GameService_Constants.BET_RATIO}!");
+            Console.WriteLine($"\n User {user.Name} has won {user.Bet * GameService_Constants.BetRatio}!");
         }
 
-        public static void ShowUserLost(User user)
+        public static void ShowUserLost(IUser user)
         {
             Console.WriteLine($"\n User {user.Name} has lost {user.Bet}");
         }
 
-        public static void ShowUserDraw(User user)
+        public static void ShowUserDraw(IUser user)
         {
             Console.WriteLine($"\n User {user.Name} has got a draw!");
         }
 
-        public static void ShowUserCardGetting(User user)
+        public static void ShowUserCardGetting(IUser user)
         {
             Console.WriteLine($"User {user.Name} taked a card");
         }
 
-        public static void ShowUserSpecificCardGetting(User user)
+        public static void ShowUserSpecificCardGetting(IUser user)
         {
             Console.WriteLine($"{user.Name} taked {GetCardInfo(user.Cards.Last())})");
         }
@@ -63,7 +63,7 @@ namespace Views
             Console.WriteLine($"{bot.Name} taked {GetCardInfo(bot.Cards.Last())})");
         }
 
-        public static void ShowUserScore(User user)
+        public static void ShowUserScore(IUser user)
         {
             Console.WriteLine($"\nUser {user.Name}'s score now is: {user.Score}\n");
         }
@@ -103,12 +103,12 @@ namespace Views
 
         #endregion
 
-        public static void ShowOverfeedScoreMessage(User user)
+        public static void ShowOverfeedScoreMessage(IUser user)
         {
             Console.WriteLine($"User {user.Name} score was overfeeded!");
         }
 
-        public static void ShowGreatScoreMessage(User user)
+        public static void ShowGreatScoreMessage(IUser user)
         {
             Console.WriteLine($"{user.Name} have a great score!");
         }
@@ -149,10 +149,10 @@ namespace Views
 
         public static string GetCardInfo(ICard card)
         {
-            return $"{Enum.GetName(typeof(Card_Enums.CardRank), card.Rank)} {Enum.GetName(typeof(Card_Enums.CardSuit), card.Suit)} (Cost: {card.Cost})";
+            return $"{Enum.GetName(typeof(CardRanks.CardRank), card.Rank)} {Enum.GetName(typeof(CardSuits.CardSuit), card.Suit)} (Cost: {card.Cost})";
         }
 
-        public static void ShowResults(List<GameResult> gameResults)
+        public static void ShowAllGamesResults(List<GameResult> gameResults)
         {
             Console.Clear();
 
@@ -160,6 +160,7 @@ namespace Views
             for (int i = 0; i < gameResults.Count; ++i)
             {
                 Console.WriteLine($"\t Game number: {i + 1} \n");
+                Console.WriteLine($"Game id: {gameResults[i].GameId}\n");
                 Console.WriteLine("<Winners: ");
                 ShowPlayers(gameResults[i].Winners);
                 Console.WriteLine("Winners>\n");
@@ -176,25 +177,22 @@ namespace Views
             }
         }
 
-        public static void AskResults(List<GameResult> gameResults)
+        public static bool AskResults()
         {
             Console.WriteLine("Show games results? (If yes press 'y')");
             string res = Console.ReadLine();
             res = res.ToLower();
-            if (res.CompareTo("y") == 0)
-            {
-                ShowResults(gameResults);
-            }
+            return res.CompareTo("y") == 0;
         }
 
-        public static void ShowPlayers(List<User> players)
+        public static void ShowPlayers(List<IUser> players)
         {
             StringBuilder builder = new StringBuilder();
 
 
             for (int i = 0; i < players.Count; ++i)
             {
-                User player = players[i];
+                IUser player = players[i];
 
                 if (players[i].IsBot)
                     builder.Append("_Bot_ ");
@@ -224,6 +222,14 @@ namespace Views
         {
             Console.Clear();
             Console.WriteLine("Incorrect login or password");
+        }
+
+        public static bool AttemptAuthorizeAgain()
+        {
+            Console.WriteLine("Attempt login again? (press \"y\" if you want)");
+            string answer=Console.ReadLine().ToLower();
+
+            return answer.CompareTo("y") == 0;
         }
 
         public static void WelcomeUser(string name)

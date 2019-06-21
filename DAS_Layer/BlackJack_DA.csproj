@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3E8A99E-D0A8-48D0-BBED-BA97B60F29FF}</ProjectGuid>
+    <ProjectGuid>{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BSL_Layer</RootNamespace>
-    <AssemblyName>BSL_Layer</AssemblyName>
+    <RootNamespace>BlackJack_DA</RootNamespace>
+    <AssemblyName>BlackJack_DA</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,10 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ICard.cs" />
-    <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Interfaces\IPlayerService.cs" />
-    <Compile Include="Interfaces\IProfile.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Models\Ace.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\Card.cs" />
@@ -55,21 +56,17 @@
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BasicService.cs" />
-    <Compile Include="Services\BotService.cs" />
-    <Compile Include="Services\CroupierService.cs" />
-    <Compile Include="Services\DeckService.cs" />
-    <Compile Include="Services\GameService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Repositories\GameResultsRepository.cs" />
+    <Compile Include="JsonService.cs" />
+    <Compile Include="Repositories\ProfilesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAS_Layer\DA_Layer.csproj">
-      <Project>{34d54e1e-5ecd-4f93-afa0-88520e5db85c}</Project>
-      <Name>DA_Layer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HelpfulValues\HelpfulValues.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HelpfulValues\Common.csproj">
       <Project>{0b8f8989-fd38-4df6-afe0-e6e4002107ab}</Project>
-      <Name>HelpfulValues</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

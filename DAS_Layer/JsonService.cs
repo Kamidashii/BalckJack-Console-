@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using DA_Layer.Interfaces;
-using DA_Layer.Models;
-using DA_Layer.Repositories;
-using HelpfulValues.Constants;
+using BlackJack_DA.Interfaces;
+using BlackJack_DA.Models;
+using BlackJack_DA.Repositories;
+using Common.Constants;
 using Newtonsoft.Json;
 
-namespace DA_Layer
+namespace BlackJack_DA
 {
-    public class JSonUnitOfWork : IUnitOfWork
+    public class JsonService : IDataService
     {
         private GameResultsRepository gameResultsRepository;
         private ProfilesRepository profilesRepository;
@@ -48,7 +48,7 @@ namespace DA_Layer
         {
             try
             {
-                using (StreamReader reader = new StreamReader(GameService_Constants.RESULTS_PATH, Encoding.Default))
+                using (StreamReader reader = new StreamReader(GameService_Constants.ResultsPath, Encoding.Default))
                 {
                     string jSon = reader.ReadToEnd();
 
@@ -57,7 +57,7 @@ namespace DA_Layer
             }
             catch (Exception exc)
             {
-                HelpfulValues.LogWriter.WriteLog(exc.Message);
+                Common.LogWriter.WriteLog(exc.Message);
             }
         }
 
@@ -68,31 +68,31 @@ namespace DA_Layer
                 CreateResultsFolder();
 
                 string jSon = JsonConvert.SerializeObject(this.gameResultsRepository.GetAll());
-                using (StreamWriter writer = new StreamWriter(GameService_Constants.RESULTS_PATH, false, Encoding.Default))
+                using (StreamWriter writer = new StreamWriter(GameService_Constants.ResultsPath, false, Encoding.Default))
                 {
                     writer.Write(jSon);
                 }
             }
             catch (Exception exc)
             {
-                HelpfulValues.LogWriter.WriteLog(exc.Message);
+                Common.LogWriter.WriteLog(exc.Message);
             }
         }
 
 
         private void CreateResultsFolder()
         {
-            if (!Directory.Exists(GameService_Constants.RESULTS_FOLDER))
+            if (!Directory.Exists(GameService_Constants.ResultsFolder))
             {
-                Directory.CreateDirectory(GameService_Constants.RESULTS_FOLDER);
+                Directory.CreateDirectory(GameService_Constants.ResultsFolder);
             }
         }
 
         private void CreateResultsFile()
         {
-            if (!File.Exists(GameService_Constants.RESULTS_PATH))
+            if (!File.Exists(GameService_Constants.ResultsPath))
             {
-                File.Create(GameService_Constants.RESULTS_PATH);
+                File.Create(GameService_Constants.ResultsPath);
             }
         }
     }

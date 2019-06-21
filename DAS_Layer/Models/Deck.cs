@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HelpfulValues.Constants;
+using Common.Constants;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Deck
     {
-        public List<Card> Cards = new List<Card>(Deck_Constants.CARDS_COUNT);
+        public List<Card> Cards = new List<Card>(Deck_Constants.CardsCount);
 
         public Card TakeCard()
         {

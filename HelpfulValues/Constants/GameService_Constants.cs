@@ -1,18 +1,18 @@
 ﻿using System;
 
-namespace HelpfulValues.Constants
+namespace Common.Constants
 {
     public class GameService_Constants
     {
-        public const int MAX_VALID_SCORE = 21;
-        public const float BET_RATIO = 1.5F;
+        public const int MaxValidScore = 21;
+        public const float BetRatio = 1.5F;
 
-        public const string RESULTS_PATH = @"Results\results.json";
+        public const string ResultsPath = @"Results\results.json";
 
-        public const string RESULTS_FOLDER = @"Results";
+        public const string ResultsFolder = @"Results";
 
-        public const string LOG_PATH=@"Log\log.txt";
+        public const string LogPath=@"Log\log.txt";
 
-        public const string LOG_FOLDER = @"Log";
+        public const string LogFolder = @"Log";
     }
 }

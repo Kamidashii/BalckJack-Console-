@@ -1,10 +1,10 @@
 ﻿using System;
-using DA_Layer.Interfaces;
-using DA_Layer.Models;
+using BlackJack_DA.Interfaces;
+using BlackJack_DA.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DA_Layer.Repositories
+namespace BlackJack_DA.Repositories
 {
     public class ProfilesRepository : IRepository<Profile>
     {

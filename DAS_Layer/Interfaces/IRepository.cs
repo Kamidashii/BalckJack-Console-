@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DA_Layer.Interfaces
+namespace BlackJack_DA.Interfaces
 {
     public interface IRepository<T>
     {

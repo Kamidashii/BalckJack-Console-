@@ -52,13 +52,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BSL_Layer\BSL_Layer.csproj">
+    <ProjectReference Include="..\BSL_Layer\BlackJack_BSL.csproj">
       <Project>{b3e8a99e-d0a8-48d0-bbed-ba97b60f29ff}</Project>
-      <Name>BSL_Layer</Name>
+      <Name>BlackJack_BSL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HelpfulValues\HelpfulValues.csproj">
+    <ProjectReference Include="..\HelpfulValues\Common.csproj">
       <Project>{0b8f8989-fd38-4df6-afe0-e6e4002107ab}</Project>
-      <Name>HelpfulValues</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

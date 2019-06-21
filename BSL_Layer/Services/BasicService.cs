@@ -1,28 +1,49 @@
 ﻿using System;
-using BSL_Layer.Models;
+using BlackJack_BSL.Models;
 using System.Collections.Generic;
-using HelpfulValues.Constants;
-using HelpfulValues.Enums;
-using BSL_Layer.Interfaces;
-using DA_Layer;
+using Common.Constants;
+using Common.Enums;
+using BlackJack_BSL.Interfaces;
+using BlackJack_DA;
+using BlackJack_BSL.Mappers;
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class BasicService : IPlayerService
     {
-        protected List<IPlayer> players;
+        protected List<IUser> players;
         protected List<Deck> decks;
         protected IPlayer croupier;
 
-        JSonUnitOfWork jSonUnitOfWork;
+        #region Mappers
+        public IMapper<BlackJack_BSL.Interfaces.ICard, BlackJack_DA.Models.Card> AceMapper;
+        public IMapper<BlackJack_BSL.Models.Bot, BlackJack_DA.Models.Bot> BotMapper;
+        public IMapper<Interfaces.ICard, BlackJack_DA.Models.Card> CardMapper;
+        public IMapper<BlackJack_BSL.Models.Croupier, BlackJack_DA.Models.Croupier> CroupierMapper;
+        public IMapper<BlackJack_BSL.Models.GameResult, BlackJack_DA.Models.GameResult> GameResultMapper;
+        public IMapper<BlackJack_BSL.Interfaces.IProfile, BlackJack_DA.Models.Profile> ProfileMapper;
+        public IMapper<BlackJack_BSL.Interfaces.IUser, BlackJack_DA.Models.User> UserMapper;
+        #endregion
 
-        public BasicService(List<IPlayer> players, List<Deck> decks, IPlayer croupier)
+        JsonService jsonService;
+
+        public BasicService(List<IUser> players, List<Deck> decks, IPlayer croupier)
         {
             this.players = players;
             this.decks = decks;
             this.croupier = croupier;
 
-            jSonUnitOfWork = new JSonUnitOfWork();
+            jsonService = new JsonService();
+
+            #region MappersInitialize
+            this.AceMapper = new AceMapper();
+            this.BotMapper = new BotMapper();
+            this.CardMapper = new CardMapper();
+            this.CroupierMapper = new CroupierMapper();
+            this.GameResultMapper = new GameResultMapper();
+            this.ProfileMapper = new ProfileMapper();
+            this.UserMapper = new UserMapper();
+            #endregion 
         }
 
         public void RecalculateScore(IPlayer player)
@@ -38,12 +59,12 @@ namespace BSL_Layer.Services
 
         public bool IsPlayerWonScore(IPlayer player)
         {
-            return player.Score == GameService_Constants.MAX_VALID_SCORE;
+            return player.Score == GameService_Constants.MaxValidScore;
         }
 
         public bool IsPlayerScoreValid(IPlayer player) //If Score more then 21 returns false
         {
-            return player.Score <= GameService_Constants.MAX_VALID_SCORE;
+            return player.Score <= GameService_Constants.MaxValidScore;
         }
 
         protected List<Ace> CountAces(IPlayer player)
@@ -51,7 +72,7 @@ namespace BSL_Layer.Services
             List<Ace> aces = new List<Ace>();
             for (int i = 0; i < player.Cards.Count; ++i)
             {
-                if (player.Cards[i].Rank == Card_Enums.CardRank.Ace)
+                if (player.Cards[i].Rank == CardRanks.CardRank.Ace)
                 {
                     Ace ace = player.Cards[i] as Ace;
                     if (!ace.IsSpecialOn)
@@ -91,16 +112,16 @@ namespace BSL_Layer.Services
             player.Score += card.Cost;
         }
 
-        public User GetPlayerByProfile(IProfile playerProfile)
+        public IUser GetPlayerByProfile(IProfile playerProfile)
         {
-            DA_Layer.Models.Profile profile = jSonUnitOfWork.ProfilesRepository.Get(playerProfile.GetProfileToDB());
+            BlackJack_DA.Models.Profile profile = jsonService.ProfilesRepository.Get(ProfileMapper.ConvertItemToDA(playerProfile));
 
             if (profile == null) return null;
 
 
-            DA_Layer.Models.User DAuser = profile.User;
+            BlackJack_DA.Models.User DAuser = profile.User;
 
-            return new User(DAuser);
+            return UserMapper.ConvertItemToBSL(DAuser);
         }
     }
 }

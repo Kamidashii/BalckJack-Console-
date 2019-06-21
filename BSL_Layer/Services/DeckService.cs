@@ -1,26 +1,26 @@
 ﻿using System;
-using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
-using HelpfulValues.Enums;
+using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
+using Common.Enums;
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class DeckService
     {
         public void SetAllCards(Deck deck)
         {
-            var suits = Enum.GetValues(typeof(Card_Enums.CardSuit));
-            var ranks = Enum.GetValues(typeof(Card_Enums.CardRank));
+            var suits = Enum.GetValues(typeof(CardSuits.CardSuit));
+            var ranks = Enum.GetValues(typeof(CardRanks.CardRank));
 
             for (int i = 0; i < suits.Length; i++)
             {
                 for (int j = 0; j < ranks.Length; ++j)
                 {
-                    Card_Enums.CardSuit suit = (Card_Enums.CardSuit)suits.GetValue(i);
-                    Card_Enums.CardRank rank = (Card_Enums.CardRank)ranks.GetValue(j);
+                    CardSuits.CardSuit suit = (CardSuits.CardSuit)suits.GetValue(i);
+                    CardRanks.CardRank rank = (CardRanks.CardRank)ranks.GetValue(j);
 
                     ICard card;
-                    if (rank == Card_Enums.CardRank.Ace)
+                    if (rank == CardRanks.CardRank.Ace)
                     {
                         card = new Ace(rank, suit);
                     }

@@ -1,28 +1,28 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using HelpfulValues.Enums;
+using Common.Enums;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Bot : User
     {
-        public Bot_Enums.Bot_Demeanor Demeanor;
+        public BotDemeanors.BotDemeanor Demeanor;
 
 
-        public Bot(string name, int bet, Bot_Enums.Bot_Demeanor demeanor) : base(name, bet)
+        public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor) : base(name, bet)
         {
             this.Demeanor = demeanor;
             this.IsBot = true;
         }
 
         [JsonConstructor]
-        public Bot(string name, int bet, Bot_Enums.Bot_Demeanor demeanor, int score, List<Card> cards) : base(name, bet)
+        public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor, int score, List<Card> cards,bool isBot) : base(name, bet)
         {
             this.Score = score;
             this.Cards = cards;
             this.Demeanor = demeanor;
-            this.IsBot = true;
+            this.IsBot = isBot;
         }
     }
 }

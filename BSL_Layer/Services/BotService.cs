@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
-using HelpfulValues.Constants;
+using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
+using Common.Constants;
 
 
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class BotService : BasicService
     {
-        public BotService(List<IPlayer> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier)
+        public BotService(List<IUser> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier)
         { }
 
         public void DesperateBotAction(IPlayer bot)
@@ -24,7 +24,7 @@ namespace BSL_Layer.Services
 
         public void NormalBotAction(IPlayer bot)
         {
-            while (bot.Score <= Bot_Constants.NORMAL_BOT_MAX_SCORE && IsPlayerScoreValid(bot))
+            while (bot.Score <= Bot_Constants.NormalBotMaxScore && IsPlayerScoreValid(bot))
             {
                 PlayerGetCard(bot, PullOutCard());
                 RecalculateScore(bot);
@@ -33,7 +33,7 @@ namespace BSL_Layer.Services
 
         public void SafeBotAction(IPlayer bot)
         {
-            while (bot.Score <= Bot_Constants.SAFE_BOT_MAX_SCORE && IsPlayerScoreValid(bot))
+            while (bot.Score <= Bot_Constants.SafeBotMaxScore && IsPlayerScoreValid(bot))
             {
                 PlayerGetCard(bot, PullOutCard());
                 RecalculateScore(bot);
@@ -43,7 +43,7 @@ namespace BSL_Layer.Services
         public override IPlayer MakePlayerClone(IPlayer original)
         {
             Bot origin = original as Bot;
-            IPlayer copy = new Bot(origin.Name, origin.Bet, origin.Demeanor, origin.Score, origin.Cards);
+            IUser copy = new Bot(origin.Name, origin.Bet, origin.Demeanor, origin.Score, origin.Cards,true);
             return copy;
         }
     }

@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
+using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
 
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class UserService : BasicService
     {
-        public UserService(List<IPlayer> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier) { }
+        public UserService(List<IUser> players, List<Deck> decks, IPlayer croupier) : base(players, decks, croupier) { }
         
 
         public override IPlayer MakePlayerClone(IPlayer original)
         {
-            User origin = original as User;
-            IPlayer copy = new User(origin.Name, origin.Bet, origin.Score, origin.Cards);
+            IUser origin = original as User;
+            IUser copy = new User(origin.Name, origin.Bet, origin.Score, origin.Cards,false);
             return copy;
         }
     }

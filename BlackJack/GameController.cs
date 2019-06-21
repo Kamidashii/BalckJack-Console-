@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Views;
 using System.Threading;
-using BSL_Layer.Services;
-using BSL_Layer.Models;
-using HelpfulValues.Enums;
-using BSL_Layer.Interfaces;
+using BlackJack_BSL.Services;
+using BlackJack_BSL.Models;
+using Common.Enums;
+using BlackJack_BSL.Interfaces;
 
 namespace BlackJack
 {
@@ -27,23 +27,22 @@ namespace BlackJack
 
         private GameController()
         {
-            List<IPlayer> players = new List<IPlayer>() {
-            new Bot("CalmBot",50,Bot_Enums.Bot_Demeanor.Safe),
-            new Bot("NormalBot",100,Bot_Enums.Bot_Demeanor.Normal),
-            new Bot("DesperateBot",400,Bot_Enums.Bot_Demeanor.Desperate),
-            new Bot("NormalBot2", 100,Bot_Enums.Bot_Demeanor.Normal)};
+            List<IUser> players = new List<IUser>() {
+            new Bot("CalmBot",50,BotDemeanors.BotDemeanor.Safe),
+            new Bot("NormalBot",100,BotDemeanors.BotDemeanor.Normal),
+            new Bot("DesperateBot",400,BotDemeanors.BotDemeanor.Desperate),
+            new Bot("NormalBot2", 100,BotDemeanors.BotDemeanor.Normal)};
 
 
-            Croupier croupier = new Croupier();
+            IPlayer croupier = new Croupier();
 
             this.gameService = new GameService(players, croupier, 1, 1);
-
-            User user = Authorize();
-            this.gameService.Players.Add(user);
         }
 
         public void StartGames()
         {
+            if (!Authorize()) return;
+            
             for (int i = 0; i < gameService.gamesCount; ++i)
             {
                 MainView.ShowWaitNextGame();
@@ -55,28 +54,16 @@ namespace BlackJack
             gameService.SaveResults();
             MainView.ShowGamesOverMessage();
 
-            MainView.AskResults(gameService.LoadResults());
+            if (MainView.AskResults())
+                MainView.ShowAllGamesResults(gameService.LoadResults());
         }
 
         private void StartGame()
         {
             gameService.GiveFirstCards();
-            ShowPlayersScore();
+            ShowPlayersAndCroupierScore();
 
-            for (int i = 0; i < gameService.Players.Count; ++i)
-            {
-                if (gameService.Players[i].IsBot)
-                {
-                    MainView.ShowBotTurn(gameService.Players[i] as Bot);
-                    StartBotTurn(gameService.Players[i] as Bot);
-                }
-                else
-                {
-                    MainView.ShowUserTurn(gameService.Players[i] as User);
-                    StartUserTurn(gameService.Players[i] as User);
-                }
-                SetArtificialWaiting();
-            }
+            StartAllPlayersTurns();
 
             MainView.ShowCroupierGetTurn();
             gameService.CroupierService.StartCroupierTurn(gameService.Croupier);
@@ -84,76 +71,101 @@ namespace BlackJack
             MainView.ShowCroupierScore(gameService.Croupier);
             GameResult gameResult = gameService.CheckWinners();
 
-
-            ShowWinners(gameResult.Winners);
-            ShowLosers(gameResult.Losers);
-            ShowDraws(gameResult.Draws);
-
+            ShowGameResult(gameResult);
 
             gameService.ResetGameData();
         }
 
-        private void StartUserTurn(User user)
+        private void StartUserTurn(IUser user)
         {
-            User_Enums.ActionType choosedAction = User_Enums.ActionType.Invalid;
-            do
+            UserActions.ActionType choosedAction = UserActions.ActionType.Invalid;
+
+            MainView.ShowUserActionInstruction();
+            choosedAction = MainView.FindOutUserAction();
+
+            switch (choosedAction)
             {
-                MainView.ShowUserActionInstruction();
-                choosedAction = MainView.FindOutUserAction();
-
-                switch (choosedAction)
-                {
-                    case User_Enums.ActionType.Take:
-                        {
-                            gameService.UserService.PlayerGetCard(user, gameService.BasicService.PullOutCard());
-                            MainView.ShowUserCardGetting(user);
-
-                            MainView.ShowUserSpecificCardGetting(user);
-
-                            gameService.BasicService.RecalculateScore(user);
-                            MainView.ShowUserScore(user);
-
-                            if (!gameService.BasicService.IsPlayerScoreValid(user))
-                            {
-                                MainView.ShowOverfeedScoreMessage(user);
-                                choosedAction = User_Enums.ActionType.Finished;
-                            }
-
-                            else if (gameService.BasicService.IsPlayerWonScore(user))
-                            {
-                                MainView.ShowGreatScoreMessage(user);
-                                choosedAction = User_Enums.ActionType.Finished;
-                            }
-                        }
-                        break;
-                    case User_Enums.ActionType.Enough:
-                        {
-                            choosedAction = User_Enums.ActionType.Finished;
-                        }
-                        break;
-                    case User_Enums.ActionType.Surrender:
-                        {
-                            MainView.ShowUserLost(user);
-                            choosedAction = User_Enums.ActionType.Finished;
-                        }
-                        break;
-                    case User_Enums.ActionType.ShowCards:
-                        {
-                            ShowUserOwnedCards(user);
-                        }
-                        break;
-                    default:
-                        {
-                            MainView.ShowInvalidChoose();
-                            choosedAction = User_Enums.ActionType.Invalid;
-                        }
-                        break;
-                }
-
-            } while (choosedAction != User_Enums.ActionType.Finished);
+                case UserActions.ActionType.Take:
+                    {
+                        UserTakeCard(user, ref choosedAction);
+                    }
+                    break;
+                case UserActions.ActionType.Enough:
+                    {
+                        choosedAction = UserActions.ActionType.Finished;
+                    }
+                    break;
+                case UserActions.ActionType.Surrender:
+                    {
+                        MainView.ShowUserLost(user);
+                        choosedAction = UserActions.ActionType.Finished;
+                    }
+                    break;
+                case UserActions.ActionType.ShowCards:
+                    {
+                        ShowUserOwnedCards(user);
+                    }
+                    break;
+                default:
+                    {
+                        MainView.ShowInvalidChoose();
+                        choosedAction = UserActions.ActionType.Invalid;
+                    }
+                    break;
+            }
+            if (choosedAction != UserActions.ActionType.Finished)
+                StartUserTurn(user);
         }
 
-        private void ShowPlayersScore()
+        private void UserTakeCard(IUser user, ref UserActions.ActionType choosedAction)
+        {
+            gameService.UserService.PlayerGetCard(user, gameService.BasicService.PullOutCard());
+
+            MainView.ShowUserCardGetting(user);
+            MainView.ShowUserSpecificCardGetting(user);
+
+            gameService.BasicService.RecalculateScore(user);
+            MainView.ShowUserScore(user);
+
+            if (!gameService.BasicService.IsPlayerScoreValid(user))
+            {
+                MainView.ShowOverfeedScoreMessage(user);
+                choosedAction = UserActions.ActionType.Finished;
+            }
+
+            else if (gameService.BasicService.IsPlayerWonScore(user))
+            {
+                MainView.ShowGreatScoreMessage(user);
+                choosedAction = UserActions.ActionType.Finished;
+            }
+        }
+
+        private void StartAllPlayersTurns()
+        {
+            for (int i = 0; i < gameService.Players.Count; ++i)
+            {
+                if (gameService.Players[i].IsBot)
+                {
+                    MainView.ShowBotTurn(gameService.Players[i] as Bot);
+                    StartBotTurn(gameService.Players[i] as Bot);
+                }
+                else if (!gameService.Players[i].IsBot)
+                {
+                    MainView.ShowUserTurn(gameService.Players[i] as User);
+                    StartUserTurn(gameService.Players[i] as User);
+                }
+                SetArtificialWaiting();
+            }
+        }
+
+        private void ShowGameResult(GameResult gameResult)
+        {
+            ShowWinners(gameResult.Winners);
+            ShowLosers(gameResult.Losers);
+            ShowDraws(gameResult.Draws);
+        }
+
+        private void ShowPlayersAndCroupierScore()
         {
             for (int i = 0; i < gameService.Players.Count; ++i)
             {
@@ -164,7 +176,7 @@ namespace BlackJack
             MainView.ShowCroupierCardGetting();
         }
 
-        private void ShowUserOwnedCards(User user)
+        private void ShowUserOwnedCards(IUser user)
         {
             for (int i = 0; i < user.Cards.Count; ++i)
             {
@@ -177,17 +189,17 @@ namespace BlackJack
         {
             switch (bot.Demeanor)
             {
-                case Bot_Enums.Bot_Demeanor.Desperate:
+                case BotDemeanors.BotDemeanor.Desperate:
                     {
                         gameService.BotService.DesperateBotAction(bot);
                         MainView.ShowBotSpecificCardGetting(bot);
                     }
                     break;
-                case Bot_Enums.Bot_Demeanor.Normal:
+                case BotDemeanors.BotDemeanor.Normal:
                     gameService.BotService.NormalBotAction(bot);
                     MainView.ShowBotSpecificCardGetting(bot);
                     break;
-                case Bot_Enums.Bot_Demeanor.Safe:
+                case BotDemeanors.BotDemeanor.Safe:
                     gameService.BotService.SafeBotAction(bot);
                     MainView.ShowBotSpecificCardGetting(bot);
                     break;
@@ -196,7 +208,7 @@ namespace BlackJack
             }
         }
 
-        private void ShowWinners(List<User> users)
+        private void ShowWinners(List<IUser> users)
         {
             for (int i = 0; i < users.Count; ++i)
             {
@@ -204,7 +216,7 @@ namespace BlackJack
             }
         }
 
-        private void ShowLosers(List<User> users)
+        private void ShowLosers(List<IUser> users)
         {
             for (int i = 0; i < users.Count; ++i)
             {
@@ -212,7 +224,7 @@ namespace BlackJack
             }
         }
 
-        private void ShowDraws(List<User> users)
+        private void ShowDraws(List<IUser> users)
         {
             for (int i = 0; i < users.Count; ++i)
             {
@@ -222,25 +234,35 @@ namespace BlackJack
 
         private void SetArtificialWaiting()
         {
-            Thread.Sleep(200);
+            Thread.Sleep(2000);
         }
 
-        public User Authorize()
+        public bool Authorize()
         {
-            User player;
-            do
+            MainView.GetLoginAndPassword(out string login, out string password);
+            Profile profile = new Profile(login, password);
+            if (isProfileExist(profile, out IUser user))
             {
-                string login;
-                string password;
-                MainView.GetLoginAndPassword(out login, out password);
-                Profile profile = new Profile(login, password);
-                player = gameService.BasicService.GetPlayerByProfile(profile);
-                if (player == null) MainView.IncorrectLoginOrPassword();
+                this.gameService.Players.Insert(0, user);
+                MainView.WelcomeUser(user.Name);
+                return true;
+            }
 
-            } while (player == null);
+            MainView.IncorrectLoginOrPassword();
+            if (MainView.AttemptAuthorizeAgain())
+                Authorize();
+            else
+            {
+                return false;
+            }
 
-            MainView.WelcomeUser(player.Name);
-            return player;
+            return true;
+        }
+
+        public bool isProfileExist(IProfile profile, out IUser user)
+        {
+            user = gameService.BasicService.GetPlayerByProfile(profile);
+            return (user != null);
         }
     }
 }

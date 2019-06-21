@@ -1,11 +1,12 @@
 ﻿using System;
-using DA_Layer.Models;
+using BlackJack_DA.Models;
 
-namespace DA_Layer.Interfaces
+namespace BlackJack_DA.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IDataService
     {
         IRepository<GameResult> GameResultsRepository { get; }
+        IRepository<Profile> ProfilesRepository { get; }
         void Save();
     }
 }

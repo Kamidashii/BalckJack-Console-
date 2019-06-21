@@ -7,8 +7,8 @@
     <ProjectGuid>{0B8F8989-FD38-4DF6-AFE0-E6E4002107AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HelpfulValues</RootNamespace>
-    <AssemblyName>HelpfulValues</AssemblyName>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,9 +45,10 @@
     <Compile Include="Constants\Croupier_Constants.cs" />
     <Compile Include="Constants\Deck_Constants.cs" />
     <Compile Include="Constants\GameService_Constants.cs" />
-    <Compile Include="Enums\Bot_Enums.cs" />
-    <Compile Include="Enums\Card_Enums.cs" />
-    <Compile Include="Enums\User_Enums.cs" />
+    <Compile Include="Enums\BotDemeanors.cs" />
+    <Compile Include="Enums\CardRanks.cs" />
+    <Compile Include="Enums\CardSuits.cs" />
+    <Compile Include="Enums\UserActions.cs" />
     <Compile Include="LogWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

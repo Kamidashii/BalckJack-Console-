@@ -1,18 +1,18 @@
 ﻿using System;
-using HelpfulValues.Enums;
+using Common.Enums;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Ace : Card
     {
-        public readonly int specialCost = 1;
+        public int SpecialCost = 1;
         public bool IsSpecialOn = false;
 
-        public Ace(Card_Enums.CardRank rank, Card_Enums.CardSuit suit) : base(rank, suit) { }
+        public Ace(CardRanks.CardRank rank, CardSuits.CardSuit suit) : base(rank, suit) { }
 
         public int GetSpecialCostDifference()
         {
-            return this.GetCost() - this.specialCost;
+            return this.Cost - this.SpecialCost;
         }
     }
 }

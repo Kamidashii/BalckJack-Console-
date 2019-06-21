@@ -1,11 +1,6 @@
-﻿using BSL_Layer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace BSL_Layer.Interfaces
+namespace BlackJack_BSL.Interfaces
 {
     public interface IPlayerService
     {

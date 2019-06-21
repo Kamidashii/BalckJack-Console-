@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BSL_Layer.Interfaces;
-using HelpfulValues.Constants;
+using BlackJack_BSL.Interfaces;
+using Common.Constants;
 
-namespace BSL_Layer.Models
+namespace BlackJack_BSL.Models
 {
-    public class Deck
+    public class Deck:IDeck
     {
-        public List<ICard> Cards = new List<ICard>(Deck_Constants.CARDS_COUNT);
+        public List<ICard> Cards { get; set; } = new List<ICard>(Deck_Constants.CardsCount);
 
         public ICard TakeCard()
         {

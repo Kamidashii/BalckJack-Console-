@@ -1,9 +1,9 @@
 ﻿using System;
-using HelpfulValues.Constants;
+using Common.Constants;
 using System.IO;
 using System.Text;
 
-namespace HelpfulValues
+namespace Common
 {
     public class LogWriter
     {
@@ -11,7 +11,7 @@ namespace HelpfulValues
         {
             CreateLogFolder();
 
-            using (StreamWriter writer = new StreamWriter(GameService_Constants.LOG_PATH, true, Encoding.Default))
+            using (StreamWriter writer = new StreamWriter(GameService_Constants.LogPath, true, Encoding.Default))
             {
                 writer.Write(message);
             }
@@ -20,17 +20,17 @@ namespace HelpfulValues
 
         private static void CreateLogFolder()
         {
-            if (!Directory.Exists(GameService_Constants.LOG_FOLDER))
+            if (!Directory.Exists(GameService_Constants.LogFolder))
             {
-                Directory.CreateDirectory(GameService_Constants.LOG_FOLDER);
+                Directory.CreateDirectory(GameService_Constants.LogFolder);
             }
         }
 
         private static void CreateLogFile()
         {
-            if (!File.Exists(GameService_Constants.LOG_PATH))
+            if (!File.Exists(GameService_Constants.LogPath))
             {
-                File.Create(GameService_Constants.LOG_PATH);
+                File.Create(GameService_Constants.LogPath);
             }
         }
     }

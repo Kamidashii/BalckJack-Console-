@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class User : Player
     {
@@ -17,13 +17,13 @@ namespace DA_Layer.Models
         }
         
         [JsonConstructor]
-        public User(string name,int bet,int score,List<Card>cards)
+        public User(string name,int bet,int score,List<Card>cards,bool isBot)
         {
             this.Name = name;
             this.Bet = bet;
             this.Score = score;
             this.Cards = cards;
-            this.IsBot = false;
+            this.IsBot = isBot;
         }
     }
 }

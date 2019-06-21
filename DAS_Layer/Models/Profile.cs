@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Profile
     {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class GameResult
     {
@@ -11,7 +11,7 @@ namespace DA_Layer.Models
 
         public List<User> Winners;
         public List<User> Losers;
-        public List<User> Draw;
+        public List<User> Draws;
 
         public Croupier Croupier;
 
@@ -22,7 +22,19 @@ namespace DA_Layer.Models
 
             this.Winners = new List<User>();
             this.Losers = new List<User>();
-            this.Draw = new List<User>();
+            this.Draws = new List<User>();
+        }
+
+        public GameResult(int gameId, int allGamesCount, List<User> winners, List<User> losers, List<User> draws, Croupier croupier)
+        {
+            this.GameId = gameId;
+            this.AllGamesCount = allGamesCount;
+
+            this.Winners = winners;
+            this.Losers = losers;
+            this.Draws = draws;
+
+            this.Croupier = croupier;
         }
     }
 }

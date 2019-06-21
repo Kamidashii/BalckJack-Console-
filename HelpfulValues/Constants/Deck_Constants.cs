@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace HelpfulValues.Constants
+namespace Common.Constants
 {
     public class Deck_Constants
     {
-        public const int CARDS_COUNT = 52;
+        public const int CardsCount = 52;
     }
 }

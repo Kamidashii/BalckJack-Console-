@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BSL_Layer.Interfaces;
-using BSL_Layer.Models;
-using DA_Layer;
+using BlackJack_BSL.Interfaces;
+using BlackJack_BSL.Models;
+using BlackJack_DA;
 
-namespace BSL_Layer.Services
+namespace BlackJack_BSL.Services
 {
     public class GameService
     {
@@ -15,14 +15,14 @@ namespace BSL_Layer.Services
         public UserService UserService { get; private set; }
         public CroupierService CroupierService { get; private set; }
         public DeckService DeckService { get; private set; }
-        public JSonUnitOfWork JSonService { get; private set; }
+        public JsonService JSonService { get; private set; }
         #endregion
 
-        private List<IPlayer> players;
+        private List<IUser> players;
         private List<Deck> decks;
         private IPlayer croupier;
 
-        public List<IPlayer> Players { get { return this.players; } }
+        public List<IUser> Players { get { return this.players; } }
         public IPlayer Croupier { get { return this.croupier; } }
 
         private int decksCount;
@@ -30,13 +30,12 @@ namespace BSL_Layer.Services
         public int gamesCount;
         public int gameId;
 
-        public GameService(List<IPlayer> players, IPlayer croupier, int gamesCount, int decksCount)
+        public GameService(List<IUser> players, IPlayer croupier, int gamesCount, int decksCount)
         {
             this.players = players;
             this.croupier = croupier;
             this.decks = new List<Deck>(decksCount);
-            InitializeManagers();
-
+            InitializeServices();
 
             GenerateDecks(decksCount);
             this.decksCount = decksCount;
@@ -45,14 +44,14 @@ namespace BSL_Layer.Services
             gameId = 0;
         }
 
-        private void InitializeManagers()
+        private void InitializeServices()
         {
             this.BasicService = new BasicService(players, decks, croupier);
             this.BotService = new BotService(players, decks, croupier);
             this.UserService = new UserService(players, decks, croupier);
             this.CroupierService = new CroupierService(players, decks, croupier);
             this.DeckService = new DeckService();
-            this.JSonService = new JSonUnitOfWork();
+            this.JSonService = new JsonService();
         }
 
         public void SaveResults()
@@ -62,13 +61,13 @@ namespace BSL_Layer.Services
 
         public List<GameResult> LoadResults()
         {
-            List<DA_Layer.Models.GameResult> DAresults = this.JSonService.GameResultsRepository.GetAll().ToList();
+            List<BlackJack_DA.Models.GameResult> DAresults = this.JSonService.GameResultsRepository.GetAll().ToList();
 
-            List<BSL_Layer.Models.GameResult> BSLresults = new List<GameResult>();
+            List<BlackJack_BSL.Models.GameResult> BSLresults = new List<GameResult>();
 
             for (int i = 0; i < DAresults.Count; ++i)
             {
-                BSLresults.Add(new GameResult(DAresults[i]));
+                BSLresults.Add(BasicService.GameResultMapper.ConvertItemToBSL(DAresults[i]));
             }
 
             return BSLresults;
@@ -109,7 +108,7 @@ namespace BSL_Layer.Services
                 }
             }
             gameResult.Croupier = CroupierService.MakePlayerClone(croupier as Player) as Croupier;
-            this.JSonService.GameResultsRepository.Create(gameResult.ConvertToDB());
+            this.JSonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDA(gameResult));
             gameId++;
 
             return gameResult;

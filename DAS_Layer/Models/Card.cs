@@ -1,85 +1,79 @@
 ﻿using System;
-using HelpfulValues.Enums;
+using Common.Enums;
 
-namespace DA_Layer.Models
+namespace BlackJack_DA.Models
 {
     public class Card
     {
-        public Card_Enums.CardRank Rank;
-        public Card_Enums.CardSuit Suit;
+        public CardRanks.CardRank Rank;
+        public CardSuits.CardSuit Suit;
 
-        private int cost;
+        public int Cost;
 
-        public Card(Card_Enums.CardRank rank, Card_Enums.CardSuit suit)
+        public Card(CardRanks.CardRank rank, CardSuits.CardSuit suit)
         {
             this.Rank = rank;
             this.Suit = suit;
 
             DefineCost();
         }
-
-        public int GetCost()
-        {
-            return this.cost;
-        }
-
         public void DefineCost()
         {
-            if (Rank == Card_Enums.CardRank.Two)
+            if (Rank == CardRanks.CardRank.Two)
             {
-                this.cost = 2;
+                this.Cost = 2;
             }
-            else if (Rank == Card_Enums.CardRank.Three)
+            else if (Rank == CardRanks.CardRank.Three)
             {
-                this.cost = 3;
+                this.Cost = 3;
             }
-            else if (Rank == Card_Enums.CardRank.Four)
+            else if (Rank == CardRanks.CardRank.Four)
             {
-                this.cost = 4;
+                this.Cost = 4;
             }
-            else if (Rank == Card_Enums.CardRank.Five)
+            else if (Rank == CardRanks.CardRank.Five)
             {
-                this.cost = 5;
+                this.Cost = 5;
             }
-            else if (Rank == Card_Enums.CardRank.Six)
+            else if (Rank == CardRanks.CardRank.Six)
             {
-                this.cost = 6;
+                this.Cost = 6;
             }
-            else if (Rank == Card_Enums.CardRank.Seven)
+            else if (Rank == CardRanks.CardRank.Seven)
             {
-                this.cost = 7;
+                this.Cost = 7;
             }
-            else if (Rank == Card_Enums.CardRank.Eight)
+            else if (Rank == CardRanks.CardRank.Eight)
             {
-                this.cost = 8;
+                this.Cost = 8;
             }
-            else if (Rank == Card_Enums.CardRank.Nine)
+            else if (Rank == CardRanks.CardRank.Nine)
             {
-                this.cost = 9;
+                this.Cost = 9;
             }
-            else if (Rank == Card_Enums.CardRank.Ten)
+            else if (Rank == CardRanks.CardRank.Ten)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Jack)
+            else if (Rank == CardRanks.CardRank.Jack)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Queen)
+            else if (Rank == CardRanks.CardRank.Queen)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.King)
+            else if (Rank == CardRanks.CardRank.King)
             {
-                this.cost = 10;
+                this.Cost = 10;
             }
-            else if (Rank == Card_Enums.CardRank.Ace)
+            else if (Rank == CardRanks.CardRank.Ace)
             {
-                this.cost = 11;
+                this.Cost = 11;
             }
             else
             {
-                this.cost = 0;
+                this.Cost = 0;
             }
         }
         

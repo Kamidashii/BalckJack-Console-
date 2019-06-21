@@ -1,0 +1,5 @@
+C:\Users\Dante\source\repos\BlackJack\HelpfulValues\bin\Debug\Common.dll
+C:\Users\Dante\source\repos\BlackJack\HelpfulValues\bin\Debug\Common.pdb
+C:\Users\Dante\source\repos\BlackJack\HelpfulValues\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\HelpfulValues\obj\Debug\Common.dll
+C:\Users\Dante\source\repos\BlackJack\HelpfulValues\obj\Debug\Common.pdb

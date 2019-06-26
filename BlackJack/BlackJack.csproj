@@ -52,11 +52,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BSL_Layer\BlackJack_BSL.csproj">
-      <Project>{b3e8a99e-d0a8-48d0-bbed-ba97b60f29ff}</Project>
+    <ProjectReference Include="..\BlackJack_BSL\BlackJack_BSL.csproj">
+      <Project>{d964e38c-1490-4212-85f3-a8a1bf629994}</Project>
       <Name>BlackJack_BSL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HelpfulValues\Common.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{0b8f8989-fd38-4df6-afe0-e6e4002107ab}</Project>
       <Name>Common</Name>
     </ProjectReference>

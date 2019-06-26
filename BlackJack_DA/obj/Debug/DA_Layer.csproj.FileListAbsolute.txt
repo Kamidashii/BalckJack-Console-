@@ -1,0 +1,11 @@
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\DAS_Layer.dll
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\DAS_Layer.pdb
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\HelpfulValues.dll
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\HelpfulValues.pdb
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\obj\Debug\DA_Layer.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\obj\Debug\DA_Layer.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\obj\Debug\DA_Layer.csproj.CopyComplete
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\obj\Debug\DAS_Layer.dll
+C:\Users\Dante\source\repos\BlackJack\DAS_Layer\obj\Debug\DAS_Layer.pdb

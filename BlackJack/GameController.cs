@@ -6,12 +6,13 @@ using BlackJack_BSL.Services;
 using BlackJack_BSL.Models;
 using Common.Enums;
 using BlackJack_BSL.Interfaces.Models;
+using BlackJack_BSL.Interfaces.Services;
 
 namespace BlackJack
 {
     public class GameController
     {
-        private GameService _gameService;
+        private IGameService _gameService;
 
         private static GameController _instance;
 

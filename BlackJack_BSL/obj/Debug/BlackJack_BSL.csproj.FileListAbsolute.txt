@@ -1,0 +1,13 @@
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\obj\Debug\BlackJack_BSL.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\BusinessLayer.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\BusinessLayer.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\BlackJack_DA.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\Common.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\BlackJack_DA.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\Common.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\obj\Debug\BlackJack_BSL.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\obj\Debug\BlackJack_BSL.csproj.CopyComplete
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\obj\Debug\BusinessLayer.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJack_BSL\obj\Debug\BusinessLayer.pdb

@@ -17,15 +17,16 @@ namespace BlackJack_BSL.Services
         protected List<IDeck> decks;
         protected Interfaces.Models.IPlayer croupier;
 
-        public IMapper<BlackJack_BSL.Interfaces.Models.ICard, BlackJack_DA.Models.Card> AceMapper { get; set; }
-        public IMapper<BlackJack_BSL.Models.Bot, BlackJack_DA.Models.Bot> BotMapper { get; set; }
-        public IMapper<Interfaces.Models.ICard, BlackJack_DA.Models.Card> CardMapper { get; set; }
-        public IMapper<BlackJack_BSL.Models.Croupier, BlackJack_DA.Models.Croupier> CroupierMapper { get; set; }
-        public IMapper<BlackJack_BSL.Models.GameResult, BlackJack_DA.Models.GameResult> GameResultMapper { get; set; }
-        public IMapper<BlackJack_BSL.Interfaces.Models.IProfile, BlackJack_DA.Models.Profile> ProfileMapper { get; set; }
-        public IMapper<BlackJack_BSL.Interfaces.Models.IUser, BlackJack_DA.Models.User> UserMapper { get; set; }
+        protected IMapper<BlackJack_BSL.Interfaces.Models.ICard, BlackJack_DA.Models.Card> AceMapper;
+        protected IMapper<BlackJack_BSL.Models.Bot, BlackJack_DA.Models.Bot> BotMapper;
+        protected IMapper<Interfaces.Models.ICard, BlackJack_DA.Models.Card> CardMapper;
+        protected IMapper<BlackJack_BSL.Models.Croupier, BlackJack_DA.Models.Croupier> CroupierMapper;
+        protected IMapper<BlackJack_BSL.Interfaces.Models.IProfile, BlackJack_DA.Models.Profile> ProfileMapper;
+        protected IMapper<BlackJack_BSL.Interfaces.Models.IUser, BlackJack_DA.Models.User> UserMapper;
 
-        JsonService jsonService;
+        public IMapper<BlackJack_BSL.Models.GameResult, BlackJack_DA.Models.GameResult> GameResultMapper { get; set; }
+
+        protected JsonService jsonService;
 
         public BasicService(List<BlackJack_BSL.Interfaces.Models.IUser> players, List<IDeck> decks, Interfaces.Models.IPlayer croupier)
         {

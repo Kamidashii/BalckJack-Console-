@@ -14,14 +14,14 @@ namespace BlackJack_BSL.Services
     {
         
         private int _decksCount;
-
+        private IDeckService _deckService;
+        private BlackJack_DA.Interfaces.IJsonService _jsonService;
 
         public IBasicService BasicService { get; set; }
         public IBotService BotService { get; set; }
         public IBasicService UserService { get; set; }
         public ICroupierService CroupierService { get; set; }
-        public IDeckService DeckService{ get; set; }
-        public BlackJack_DA.Interfaces.IJsonService JSonService { get; set; }
+        
 
         public List<Interfaces.Models.IUser> Players { get; set; }
         public Interfaces.Models.IPlayer Croupier { get; set; }
@@ -32,8 +32,8 @@ namespace BlackJack_BSL.Services
 
         public GameService(List<Interfaces.Models.IUser> players, Interfaces.Models.IPlayer croupier, int gamesCount, int decksCount)
         {
-            this.JSonService = new JsonService();
-            this.DeckService = new DeckService();
+            this._jsonService = new JsonService();
+            this._deckService = new DeckService();
 
             this.Players = players;
             this.Croupier = croupier;
@@ -55,18 +55,20 @@ namespace BlackJack_BSL.Services
 
         public void SaveResults()
         {
-            this.JSonService.Save();
+            this._jsonService.Save();
         }
 
         public List<GameResult> LoadResults()
         {
-            List<BlackJack_DA.Models.GameResult> DataAccessResults = this.JSonService.GameResultsRepository.GetAll().ToList();
+            List<BlackJack_DA.Models.GameResult> DataAccessResults = this._jsonService.GameResultsRepository.GetAll().ToList();
 
             List<BlackJack_BSL.Models.GameResult> BusinessLogicResults = new List<GameResult>();
 
             for (int i = 0; i < DataAccessResults.Count; ++i)
             {
-                BusinessLogicResults.Add(BasicService.GameResultMapper.ConvertItemToBusinessLogic(DataAccessResults[i]));
+                BusinessLogicResults.Add(
+                    BasicService.GameResultMapper.ConvertItemToBusinessLogic(DataAccessResults[i])
+                    );
             }
 
             return BusinessLogicResults;
@@ -77,8 +79,8 @@ namespace BlackJack_BSL.Services
             for (int i = 0; i < decksCount; ++i)
             {
                 IDeck deck = new Deck();
-                DeckService.SetAllCards(deck);
-                DeckService.ShuffleCards(deck);
+                _deckService.SetAllCards(deck);
+                _deckService.ShuffleCards(deck);
 
                 Decks.Add(deck);
             }
@@ -107,7 +109,8 @@ namespace BlackJack_BSL.Services
                 }
             }
             gameResult.Croupier = CroupierService.MakePlayerClone(Croupier as Player) as Croupier;
-            this.JSonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDataAccess(gameResult));
+
+            this._jsonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDataAccess(gameResult));
             GameId++;
 
             return gameResult;
@@ -159,7 +162,7 @@ namespace BlackJack_BSL.Services
             }
             else if (!user.IsBot)
             {
-                //gameResult.Draws.Add(UserService.MakePlayerClone(user) as IUser);
+                gameResult.Draws.Add(UserService.MakePlayerClone(user) as IUser);
             }
         }
 

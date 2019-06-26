@@ -8,21 +8,8 @@ namespace BlackJack_BSL.Interfaces.Services
 {
     public interface IBasicService
     {
-        IMapper<BlackJack_BSL.Interfaces.Models.ICard, BlackJack_DA.Models.Card> AceMapper { get; set; }
-
-        IMapper<BlackJack_BSL.Models.Bot, BlackJack_DA.Models.Bot> BotMapper { get; set; }
-
-        IMapper<Interfaces.Models.ICard, BlackJack_DA.Models.Card> CardMapper { get; set; }
-
-        IMapper<BlackJack_BSL.Models.Croupier, BlackJack_DA.Models.Croupier> CroupierMapper { get; set; }
 
         IMapper<BlackJack_BSL.Models.GameResult, BlackJack_DA.Models.GameResult> GameResultMapper { get; set; }
-
-        IMapper<BlackJack_BSL.Interfaces.Models.IProfile, BlackJack_DA.Models.Profile> ProfileMapper { get; set; }
-
-        IMapper<BlackJack_BSL.Interfaces.Models.IUser, BlackJack_DA.Models.User> UserMapper { get; set; }
-        
-        
 
 
 

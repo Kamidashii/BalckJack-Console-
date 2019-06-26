@@ -16,8 +16,6 @@ namespace BlackJack_BSL.Interfaces.Services
         IBotService BotService { get; set; }
         IBasicService UserService { get; set; }
         ICroupierService CroupierService { get; set; }
-        IDeckService DeckService { get; set; }
-        BlackJack_DA.Interfaces.IJsonService JSonService { get; set; }
 
         List<Interfaces.Models.IUser> Players { get; set; }
         Interfaces.Models.IPlayer Croupier { get; set; }

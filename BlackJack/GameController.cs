@@ -233,8 +233,7 @@ namespace BlackJack
         public bool Authorize()
         {
             MainView.GetLoginAndPassword(out string login, out string password);
-            //Profile profile = new Profile(login, password);
-            Profile profile = new Profile("login1","password1");
+            Profile profile = new Profile(login, password);
 
             if (isProfileExist(profile, out IUser user))
             {

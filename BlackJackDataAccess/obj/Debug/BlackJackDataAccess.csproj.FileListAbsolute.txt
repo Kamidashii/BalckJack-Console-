@@ -1,0 +1,11 @@
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\BlackJackDataAccess.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\BlackJackDataAccess.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\Common.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\Common.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\obj\Debug\BlackJackDataAccess.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\obj\Debug\BlackJackDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\obj\Debug\BlackJackDataAccess.csproj.CopyComplete
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\obj\Debug\BlackJackDataAccess.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackDataAccess\obj\Debug\BlackJackDataAccess.pdb

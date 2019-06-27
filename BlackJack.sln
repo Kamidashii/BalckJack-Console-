@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack", "BlackJack\BlackJack.csproj", "{DACA4BC1-E1FB-44B7-844A-B5CB51425982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack_DA", "BlackJack_DA\BlackJack_DA.csproj", "{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{0B8F8989-FD38-4DF6-AFE0-E6E4002107AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack_BSL", "BlackJack_BSL\BlackJack_BSL.csproj", "{D964E38C-1490-4212-85F3-A8A1BF629994}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJackBusinessLogic", "BlackJackBusinessLogic\BlackJackBusinessLogic.csproj", "{D964E38C-1490-4212-85F3-A8A1BF629994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJackDataAccess", "BlackJackDataAccess\BlackJackDataAccess.csproj", "{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{DACA4BC1-E1FB-44B7-844A-B5CB51425982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DACA4BC1-E1FB-44B7-844A-B5CB51425982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DACA4BC1-E1FB-44B7-844A-B5CB51425982}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B8F8989-FD38-4DF6-AFE0-E6E4002107AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B8F8989-FD38-4DF6-AFE0-E6E4002107AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B8F8989-FD38-4DF6-AFE0-E6E4002107AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{D964E38C-1490-4212-85F3-A8A1BF629994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D964E38C-1490-4212-85F3-A8A1BF629994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D964E38C-1490-4212-85F3-A8A1BF629994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D54E1E-5ECD-4F93-AFA0-88520E5DB85C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

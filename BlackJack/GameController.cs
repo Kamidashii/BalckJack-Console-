@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Views;
 using System.Threading;
-using BlackJack_BSL.Services;
-using BlackJack_BSL.Models;
+using BlackJackBusinessLogic.Services;
+using BlackJackBusinessLogic.Models;
 using Common.Enums;
-using BlackJack_BSL.Interfaces.Models;
-using BlackJack_BSL.Interfaces.Services;
+using BlackJackBusinessLogic.Interfaces.Models;
+using BlackJackBusinessLogic.Interfaces.Services;
 
 namespace BlackJack
 {
@@ -14,21 +14,9 @@ namespace BlackJack
     {
         private IGameService _gameService;
 
-        private static GameController _instance;
-
-        public static GameController GetInstance()
+        public GameController()
         {
-            if (_instance == null)
-            {
-                _instance = new GameController();
-                return _instance;
-            }
-            return _instance;
-        }
-
-        private GameController()
-        {
-            List<IUser> players = new List<IUser>() {
+            var players = new List<IUser>() {
             new Bot("CalmBot",50,BotDemeanors.BotDemeanor.Safe),
             new Bot("NormalBot",100,BotDemeanors.BotDemeanor.Normal),
             new Bot("DesperateBot",400,BotDemeanors.BotDemeanor.Desperate),
@@ -36,9 +24,7 @@ namespace BlackJack
 
 
             IPlayer croupier = new Croupier();
-
-
-
+            
             this._gameService = new GameService(players, croupier, 1, 1);
             
             this._gameService.SetServices(
@@ -65,7 +51,10 @@ namespace BlackJack
             MainView.ShowGamesOverMessage();
 
             if (MainView.AskResults())
-                MainView.ShowAllGamesResults(_gameService.LoadResults());
+            {
+                List<GameResult> gameResults = _gameService.LoadResults();
+                MainView.ShowAllGamesResults(gameResults);
+            }
         }
 
         private void StartGame()
@@ -129,7 +118,9 @@ namespace BlackJack
 
         private void UserTakeCard(IUser user, ref UserActions.ActionType choosedAction)
         {
-            _gameService.UserService.PlayerGetCard(user, _gameService.BasicService.PullOutCard());
+            ICard pullOutedCard = _gameService.BasicService.PullOutCard();
+
+            _gameService.UserService.PlayerGetCard(user, pullOutedCard);
 
             MainView.ShowUserCardGetting(user);
             MainView.ShowUserSpecificCardGetting(user);
@@ -141,12 +132,14 @@ namespace BlackJack
             {
                 MainView.ShowOverfeedScoreMessage(user);
                 choosedAction = UserActions.ActionType.Finished;
+                return;
             }
 
-            else if (_gameService.BasicService.IsPlayerWonScore(user))
+            if (_gameService.BasicService.IsPlayerWonScore(user))
             {
                 MainView.ShowGreatScoreMessage(user);
                 choosedAction = UserActions.ActionType.Finished;
+                return;
             }
         }
 
@@ -154,16 +147,20 @@ namespace BlackJack
         {
             for (int i = 0; i < _gameService.Players.Count; ++i)
             {
+                SetArtificialWaiting();
+
                 if (_gameService.Players[i].IsBot)
                 {
                     StartBotTurn(_gameService.Players[i] as IBot);
+                    return;
                 }
-                else if (!_gameService.Players[i].IsBot)
+                if (!_gameService.Players[i].IsBot)
                 {
                     MainView.ShowUserTurn(_gameService.Players[i] as IUser);
                     StartUserTurn(_gameService.Players[i] as IUser);
+                    return;
                 }
-                SetArtificialWaiting();
+                
             }
         }
 

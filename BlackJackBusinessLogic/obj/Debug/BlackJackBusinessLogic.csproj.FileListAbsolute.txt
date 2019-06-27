@@ -1,0 +1,13 @@
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\BlackJackBusinessLogic.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\BlackJackBusinessLogic.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\BlackJackDataAccess.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\Common.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\BlackJackDataAccess.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\Common.pdb
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\obj\Debug\BlackJackBusinessLogic.csprojAssemblyReference.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\obj\Debug\BlackJackBusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\obj\Debug\BlackJackBusinessLogic.csproj.CopyComplete
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\obj\Debug\BlackJackBusinessLogic.dll
+C:\Users\Dante\source\repos\BlackJack\BlackJackBusinessLogic\obj\Debug\BlackJackBusinessLogic.pdb

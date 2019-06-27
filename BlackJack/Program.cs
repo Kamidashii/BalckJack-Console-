@@ -6,7 +6,8 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            GameController.GetInstance().StartGames();
+            GameController gameController = new GameController();
+            gameController.StartGames();
 
             Console.Read();
         }

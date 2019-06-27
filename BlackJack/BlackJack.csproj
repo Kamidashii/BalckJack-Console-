@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlackJack_BSL\BlackJack_BSL.csproj">
+    <ProjectReference Include="..\BlackJackBusinessLogic\BlackJackBusinessLogic.csproj">
       <Project>{d964e38c-1490-4212-85f3-a8a1bf629994}</Project>
-      <Name>BlackJack_BSL</Name>
+      <Name>BlackJackBusinessLogic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{0b8f8989-fd38-4df6-afe0-e6e4002107ab}</Project>

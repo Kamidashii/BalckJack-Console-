@@ -1,6 +1,6 @@
-﻿using BlackJack_BSL.Interfaces;
-using BlackJack_BSL.Interfaces.Models;
-using BlackJack_BSL.Models;
+﻿using BlackJackBusinessLogic.Interfaces;
+using BlackJackBusinessLogic.Interfaces.Models;
+using BlackJackBusinessLogic.Models;
 using Common.Constants;
 using Common.Enums;
 using System;
@@ -52,12 +52,14 @@ namespace Views
 
         public static void ShowUserSpecificCardGetting(IUser user)
         {
-            Console.WriteLine($"{user.Name} taked {GetCardInfo(user.Cards.Last())})");
+            ICard newCard = user.Cards.Last();
+            Console.WriteLine($"{user.Name} taked {GetCardInfo(newCard)})");
         }
 
         public static void ShowBotSpecificCardGetting(IBot bot)
         {
-            Console.WriteLine($"{bot.Name} taked {GetCardInfo(bot.Cards.Last())})");
+            ICard newCard = bot.Cards.Last();
+            Console.WriteLine($"{bot.Name} taked {GetCardInfo(newCard)})");
         }
 
         public static void ShowUserScore(IUser user)

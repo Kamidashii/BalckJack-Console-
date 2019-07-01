@@ -13,7 +13,7 @@ namespace BlackJackBusinessLogic.Models
         public Interfaces.Models.ICard TakeCard()
         {
             Interfaces.Models.ICard firstCard = this.Cards.First();
-            this.Cards.Remove(firstCard);
+            Cards.Remove(firstCard);
 
             return firstCard;
         }

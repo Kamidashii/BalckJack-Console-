@@ -24,27 +24,37 @@ namespace BlackJack
 
 
             IPlayer croupier = new Croupier();
-            
-            this._gameService = new GameService(players, croupier, 1, 1);
-            
-            this._gameService.SetServices(
-                new BasicService(players, _gameService.Decks, croupier),
-                new BotService(players, _gameService.Decks, croupier),
-                new UserService(players, _gameService.Decks, croupier),
-                new CroupierService(players, _gameService.Decks, croupier)
-                );
+
+            _gameService = new GameService(players, croupier, 1, 1);
         }
 
         public void StartGames()
         {
-            if (!Authorize()) return;
-            
+            if (!Authorize())
+            {
+                return;
+            }
+
+            if (MainView.AskPlayGoOn())
+            {
+                PlayGames();
+            }
+
+            if (MainView.AskReauthorize())
+            {
+                RemoveOldUser();
+                StartGames();
+            }
+        }
+
+        private void PlayGames()
+        {
             for (int i = 0; i < _gameService.GamesCount; ++i)
             {
                 MainView.ShowWaitNextGame();
                 MainView.ShowGameId(_gameService.GameId);
 
-                StartGame();
+                PlayGame();
             }
 
             _gameService.SaveResults();
@@ -57,7 +67,7 @@ namespace BlackJack
             }
         }
 
-        private void StartGame()
+        private void PlayGame()
         {
             _gameService.GiveFirstCards();
             ShowPlayersAndCroupierScore();
@@ -65,7 +75,7 @@ namespace BlackJack
             StartAllPlayersTurns();
 
             MainView.ShowCroupierGetTurn();
-            _gameService.CroupierService.StartCroupierTurn(_gameService.Croupier);
+            _gameService.CroupierService.StartCroupierTurn(_gameService.Croupier, _gameService.Decks);
 
             MainView.ShowCroupierScore(_gameService.Croupier);
             GameResult gameResult = _gameService.CheckWinners();
@@ -113,12 +123,14 @@ namespace BlackJack
                     break;
             }
             if (choosedAction != UserActions.ActionType.Finished)
+            {
                 StartUserTurn(user);
+            }
         }
 
         private void UserTakeCard(IUser user, ref UserActions.ActionType choosedAction)
         {
-            ICard pullOutedCard = _gameService.BasicService.PullOutCard();
+            ICard pullOutedCard = _gameService.DeckService.PullOutCard(_gameService.Decks);
 
             _gameService.UserService.PlayerGetCard(user, pullOutedCard);
 
@@ -160,7 +172,7 @@ namespace BlackJack
                     StartUserTurn(_gameService.Players[i] as IUser);
                     return;
                 }
-                
+
             }
         }
 
@@ -194,7 +206,7 @@ namespace BlackJack
         private void StartBotTurn(IBot bot)
         {
             MainView.ShowBotTurn(bot);
-            _gameService.BotService.StartBotTurn(bot);
+            _gameService.BotService.StartBotTurn(bot, _gameService.Decks);
             MainView.ShowBotSpecificCardGetting(bot);
         }
 
@@ -241,13 +253,20 @@ namespace BlackJack
 
             MainView.IncorrectLoginOrPassword();
             if (MainView.AttemptAuthorizeAgain())
+            {
                 Authorize();
+            }
             else
             {
                 return false;
             }
 
             return true;
+        }
+
+        public void RemoveOldUser()
+        {
+            this._gameService.RemoveOldUser();
         }
 
         public bool isProfileExist(IProfile profile, out IUser user)

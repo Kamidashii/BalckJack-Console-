@@ -19,9 +19,9 @@ namespace BlackJackBusinessLogic.Mappers
             BlackJackBusinessLogic.Models.GameResult BusinessLogicResult = new Models.GameResult(
                 DataAccessResult.GameId,
                 DataAccessResult.AllGamesCount,
-                ConvertUsersListToBSL(DataAccessResult.Winners),
-                ConvertUsersListToBSL(DataAccessResult.Losers),
-                ConvertUsersListToBSL(DataAccessResult.Draws),
+                ConvertUsersListToBusinessLogic(DataAccessResult.Winners),
+                ConvertUsersListToBusinessLogic(DataAccessResult.Losers),
+                ConvertUsersListToBusinessLogic(DataAccessResult.Draws),
                 _croupierMapper.ConvertItemToBusinessLogic(DataAccessResult.Croupier));
 
             return BusinessLogicResult;
@@ -29,17 +29,17 @@ namespace BlackJackBusinessLogic.Mappers
 
         public BlackJackDataAccess.Models.GameResult ConvertItemToDataAccess(BlackJackBusinessLogic.Models.GameResult BusinessLogicResult)
         {
-            BlackJackDataAccess.Models.GameResult DataAccessResult = new BlackJackDataAccess.Models.GameResult(BusinessLogicResult.GameId,
+            var DataAccessResult = new BlackJackDataAccess.Models.GameResult(BusinessLogicResult.GameId,
                BusinessLogicResult.AllGamesCount,
-               ConvertUsersToDA(BusinessLogicResult.Winners),
-               ConvertUsersToDA(BusinessLogicResult.Losers),
-               ConvertUsersToDA(BusinessLogicResult.Draws),
+               ConvertUsersToDataAccess(BusinessLogicResult.Winners),
+               ConvertUsersToDataAccess(BusinessLogicResult.Losers),
+               ConvertUsersToDataAccess(BusinessLogicResult.Draws),
                _croupierMapper.ConvertItemToDataAccess(BusinessLogicResult.Croupier));
 
             return DataAccessResult;
         }
 
-        private List<BlackJackBusinessLogic.Interfaces.Models.IUser> ConvertUsersListToBSL(List<BlackJackDataAccess.Models.User> DataAccessUsersList)
+        private List<BlackJackBusinessLogic.Interfaces.Models.IUser> ConvertUsersListToBusinessLogic(List<BlackJackDataAccess.Models.User> DataAccessUsersList)
         {
             var BusinessLogicUsersList = new List<BlackJackBusinessLogic.Interfaces.Models.IUser>();
 
@@ -50,7 +50,7 @@ namespace BlackJackBusinessLogic.Mappers
 
             return BusinessLogicUsersList;
         }
-        private List<BlackJackDataAccess.Models.User> ConvertUsersToDA(List<BlackJackBusinessLogic.Interfaces.Models.IUser> BusinessLogicUsersList)
+        private List<BlackJackDataAccess.Models.User> ConvertUsersToDataAccess(List<BlackJackBusinessLogic.Interfaces.Models.IUser> BusinessLogicUsersList)
         {
             var DataAccessUsersList = new List<BlackJackDataAccess.Models.User>();
 

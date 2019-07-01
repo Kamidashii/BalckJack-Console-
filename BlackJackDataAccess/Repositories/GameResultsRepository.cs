@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BlackJackDataAccess.Interfaces;
+using BlackJackDataAccess.Interfaces.Repositories;
 using BlackJackDataAccess.Models;
 
 namespace BlackJackDataAccess.Repositories

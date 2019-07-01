@@ -12,8 +12,8 @@ namespace BlackJackBusinessLogic.Models
 
         public Card(CardRanks.CardRank rank, CardSuits.CardSuit suit)
         {
-            this.Rank = rank;
-            this.Suit = suit;
+            Rank = rank;
+            Suit = suit;
 
             DefineCost();
         }
@@ -21,55 +21,55 @@ namespace BlackJackBusinessLogic.Models
         {
             if (Rank == CardRanks.CardRank.Two)
             {
-                this.Cost = 2;
+                Cost = 2;
             }
-            else if (Rank == CardRanks.CardRank.Three)
+            if (Rank == CardRanks.CardRank.Three)
             {
-                this.Cost = 3;
+                Cost = 3;
             }
-            else if (Rank == CardRanks.CardRank.Four)
+            if (Rank == CardRanks.CardRank.Four)
             {
-                this.Cost = 4;
+                Cost = 4;
             }
-            else if (Rank == CardRanks.CardRank.Five)
+            if (Rank == CardRanks.CardRank.Five)
             {
-                this.Cost = 5;
+                Cost = 5;
             }
-            else if (Rank == CardRanks.CardRank.Six)
+            if (Rank == CardRanks.CardRank.Six)
             {
-                this.Cost = 6;
+                Cost = 6;
             }
-            else if (Rank == CardRanks.CardRank.Seven)
+            if (Rank == CardRanks.CardRank.Seven)
             {
-                this.Cost = 7;
+                Cost = 7;
             }
-            else if (Rank == CardRanks.CardRank.Eight)
+            if (Rank == CardRanks.CardRank.Eight)
             {
-                this.Cost = 8;
+                Cost = 8;
             }
-            else if (Rank == CardRanks.CardRank.Nine)
+            if (Rank == CardRanks.CardRank.Nine)
             {
-                this.Cost = 9;
+                Cost = 9;
             }
-            else if (Rank == CardRanks.CardRank.Ten)
+            if (Rank == CardRanks.CardRank.Ten)
             {
-                this.Cost = 10;
+                Cost = 10;
             }
-            else if (Rank == CardRanks.CardRank.Jack)
+            if (Rank == CardRanks.CardRank.Jack)
             {
-                this.Cost = 10;
+                Cost = 10;
             }
-            else if (Rank == CardRanks.CardRank.Queen)
+            if (Rank == CardRanks.CardRank.Queen)
             {
-                this.Cost = 10;
+                Cost = 10;
             }
-            else if (Rank == CardRanks.CardRank.King)
+            if (Rank == CardRanks.CardRank.King)
             {
-                this.Cost = 10;
+                Cost = 10;
             }
-            else if (Rank == CardRanks.CardRank.Ace)
+            if (Rank == CardRanks.CardRank.Ace)
             {
-                this.Cost = 11;
+                Cost = 11;
             }
         }
         

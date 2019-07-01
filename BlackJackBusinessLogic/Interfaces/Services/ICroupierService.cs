@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJackBusinessLogic.Interfaces.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace BlackJackBusinessLogic.Interfaces.Services
 {
     public interface ICroupierService:IBasicService
     {
-        void StartCroupierTurn(Interfaces.Models.IPlayer croupier);
+        void StartCroupierTurn(Interfaces.Models.IPlayer croupier,List<IDeck>decks);
     }
 }

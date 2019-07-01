@@ -8,15 +8,15 @@ namespace BlackJackBusinessLogic.Models
     {
         public Croupier()
         {
-            this.IsBot = true;
+            IsBot = true;
         }
         
 
         public Croupier(int score, List<Interfaces.Models.ICard> cards)
         {
-            this.Score = score;
-            this.Cards = cards;
-            this.IsBot = true;
+            Score = score;
+            Cards = cards;
+            IsBot = true;
         }
     }
 }

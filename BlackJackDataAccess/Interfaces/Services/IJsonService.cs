@@ -1,7 +1,8 @@
 ﻿using System;
+using BlackJackDataAccess.Interfaces.Repositories;
 using BlackJackDataAccess.Models;
 
-namespace BlackJackDataAccess.Interfaces
+namespace BlackJackDataAccess.Interfaces.Services
 {
     public interface IJsonService
     {

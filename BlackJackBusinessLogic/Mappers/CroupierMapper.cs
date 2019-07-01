@@ -6,14 +6,18 @@ namespace BlackJackBusinessLogic.Mappers
     {
         public BlackJackBusinessLogic.Models.Croupier ConvertItemToBusinessLogic(BlackJackDataAccess.Models.Croupier DataAccessCroupier)
         {
-            BlackJackBusinessLogic.Models.Croupier BusinessLogicCroupier = new BlackJackBusinessLogic.Models.Croupier(DataAccessCroupier.Score, ConvertCardsToBusinessLogic(DataAccessCroupier.Cards));
+            var cards = ConvertCardsToBusinessLogic(DataAccessCroupier.Cards);
+
+            var BusinessLogicCroupier = new BlackJackBusinessLogic.Models.Croupier(DataAccessCroupier.Score, cards);
 
             return BusinessLogicCroupier;
         }
 
         public BlackJackDataAccess.Models.Croupier ConvertItemToDataAccess(BlackJackBusinessLogic.Models.Croupier BusinessLogicCroupier)
         {
-            BlackJackDataAccess.Models.Croupier DataAccessCroupier = new BlackJackDataAccess.Models.Croupier(BusinessLogicCroupier.Score, ConvertCardsToDataAccess(BusinessLogicCroupier.Cards));
+            var cards = ConvertCardsToDataAccess(BusinessLogicCroupier.Cards);
+
+            var DataAccessCroupier = new BlackJackDataAccess.Models.Croupier(BusinessLogicCroupier.Score, cards);
 
             return DataAccessCroupier;
         }

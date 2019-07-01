@@ -7,6 +7,7 @@ using BlackJackBusinessLogic.Interfaces.Services;
 using BlackJackBusinessLogic.Mappers;
 using BlackJackBusinessLogic.Models;
 using BlackJackDataAccess;
+using BlackJackDataAccess.Services;
 
 namespace BlackJackBusinessLogic.Services
 {
@@ -14,14 +15,14 @@ namespace BlackJackBusinessLogic.Services
     {
         
         private int _decksCount;
-        private IDeckService _deckService;
-        private BlackJackDataAccess.Interfaces.IJsonService _jsonService;
+        private BlackJackDataAccess.Interfaces.Services.IJsonService _jsonService;
 
         public IBasicService BasicService { get; set; }
         public IBotService BotService { get; set; }
         public IBasicService UserService { get; set; }
         public ICroupierService CroupierService { get; set; }
-        
+        public IDeckService DeckService { get; set; }
+
 
         public List<Interfaces.Models.IUser> Players { get; set; }
         public Interfaces.Models.IPlayer Croupier { get; set; }
@@ -32,35 +33,31 @@ namespace BlackJackBusinessLogic.Services
 
         public GameService(List<Interfaces.Models.IUser> players, Interfaces.Models.IPlayer croupier, int gamesCount, int decksCount)
         {
-            this._jsonService = new JsonService();
-            this._deckService = new DeckService();
+            _jsonService = new JsonService();
+            DeckService = new DeckService();
+            BasicService = new BaseService();
+            BotService = new BotService();
+            UserService = new UserService();
+            CroupierService = new CroupierService();
 
-            this.Players = players;
-            this.Croupier = croupier;
-            this.Decks = new List<IDeck>(decksCount);
+            Players = players;
+            Croupier = croupier;
+            Decks = new List<IDeck>(decksCount);
 
             GenerateDecks(decksCount);
-            this._decksCount = decksCount;
+            _decksCount = decksCount;
 
-            this.GamesCount = gamesCount;
-        }
-
-        public void SetServices(IBasicService basicService,IBotService botService,IBasicService userService,ICroupierService croupierService)
-        {
-            this.BasicService = basicService;
-            this.BotService = botService;
-            this.UserService = userService;
-            this.CroupierService = croupierService;
+            GamesCount = gamesCount;
         }
 
         public void SaveResults()
         {
-            this._jsonService.Save();
+            _jsonService.Save();
         }
 
         public List<GameResult> LoadResults()
         {
-            List<BlackJackDataAccess.Models.GameResult> DataAccessResults = this._jsonService.GameResultsRepository.GetAll().ToList();
+            var DataAccessResults = _jsonService.GameResultsRepository.GetAll().ToList();
 
             var BusinessLogicResults = new List<GameResult>();
 
@@ -78,9 +75,9 @@ namespace BlackJackBusinessLogic.Services
         {
             for (int i = 0; i < decksCount; ++i)
             {
-                IDeck deck = new Deck();
-                _deckService.SetAllCards(deck);
-                _deckService.ShuffleCards(deck);
+                var deck = new Deck();
+                DeckService.SetAllCards(deck);
+                DeckService.ShuffleCards(deck);
 
                 Decks.Add(deck);
             }
@@ -111,9 +108,9 @@ namespace BlackJackBusinessLogic.Services
                     continue;
                 }
             }
-            gameResult.Croupier = CroupierService.MakePlayerClone(Croupier as Player) as Croupier;
+            gameResult.Croupier = CroupierService.MakePlayerClone(Croupier as IPlayer) as Croupier;
 
-            this._jsonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDataAccess(gameResult));
+            _jsonService.GameResultsRepository.Create(BasicService.GameResultMapper.ConvertItemToDataAccess(gameResult));
             GameId++;
 
             return gameResult;
@@ -127,13 +124,13 @@ namespace BlackJackBusinessLogic.Services
             {
                 for (int j = 0; j < 2; ++j)
                 {
-                    pullOutedCard = BasicService.PullOutCard();
+                    pullOutedCard = DeckService.PullOutCard(Decks);
                     UserService.PlayerGetCard(Players[i], pullOutedCard);
                     BasicService.RecalculateScore(this.Players[i]);
                 }
             }
 
-            pullOutedCard = BasicService.PullOutCard();
+            pullOutedCard = DeckService.PullOutCard(Decks);
             CroupierService.PlayerGetCard(Croupier, pullOutedCard);
         }
 
@@ -189,17 +186,29 @@ namespace BlackJackBusinessLogic.Services
 
         public void ResetGameData()
         {
-            for (int i = 0; i < this.Players.Count; ++i)
+            for (int i = 0; i < Players.Count; ++i)
             {
-                BasicService.ResetPlayerScore(this.Players[i]);
-                BasicService.ResetPlayerDeck(this.Players[i]);
+                BasicService.ResetPlayerScore(Players[i]);
+                BasicService.ResetPlayerDeck(Players[i]);
             }
 
-            BasicService.ResetPlayerScore(this.Croupier);
-            BasicService.ResetPlayerDeck(this.Croupier);
+            BasicService.ResetPlayerScore(Croupier);
+            BasicService.ResetPlayerDeck(Croupier);
 
 
             ResetDecks();
+        }
+
+        public void RemoveOldUser()
+        {
+            for(int i=0;i<Players.Count;++i)
+            {
+                if(!Players[i].IsBot)
+                {
+                    Players.RemoveAt(i);
+                    return;
+                }
+            }
         }
     }
 }

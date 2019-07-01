@@ -177,16 +177,19 @@ namespace Views
         public static void ShowPlayers(List<IUser> players)
         {
             StringBuilder builder = new StringBuilder();
-
-
+            
             for (int i = 0; i < players.Count; ++i)
             {
                 IUser player = players[i];
 
                 if (players[i].IsBot)
+                {
                     builder.Append("_Bot_ ");
-                else
+                }
+                if(!players[i].IsBot)
+                {
                     builder.Append("_Player_ ");
+                }
 
                 builder.Append(player.Name).Append(" Score: " + player.Score).Append(" Bet: " + player.Bet).Append("\n");
 
@@ -224,6 +227,22 @@ namespace Views
         public static void WelcomeUser(string name)
         {
             Console.WriteLine("Welcome, " + name + "!");
+        }
+
+        public static bool AskPlayGoOn()
+        {
+            Console.WriteLine("Do you want to playing go on at this profile?(Press \"y\" if you do)");
+            var choose=Console.ReadLine().ToLower();
+
+            return choose.CompareTo("y") == 0;
+        }
+
+        public static bool AskReauthorize()
+        {
+            Console.WriteLine("Do you want to reauthorize?(Press \"y\" if you do)");
+            var choose = Console.ReadLine().ToLower();
+
+            return choose.CompareTo("y") == 0;
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace BlackJackBusinessLogic.Interfaces
 {
-    public interface IMapper<BSL,DA>
+    public interface IMapper<BusinessLogic,DataAccess>
     {
-        DA ConvertItemToDataAccess(BSL item);
-        BSL ConvertItemToBusinessLogic(DA item);
+        DataAccess ConvertItemToDataAccess(BusinessLogic item);
+        BusinessLogic ConvertItemToBusinessLogic(DataAccess item);
     }
 }

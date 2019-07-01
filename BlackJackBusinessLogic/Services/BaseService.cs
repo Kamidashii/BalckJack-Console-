@@ -8,14 +8,12 @@ using BlackJackDataAccess;
 using BlackJackBusinessLogic.Mappers;
 using System.Linq;
 using BlackJackBusinessLogic.Interfaces.Models;
+using BlackJackDataAccess.Services;
 
 namespace BlackJackBusinessLogic.Services
 {
-    public class BasicService : Interfaces.Services.IBasicService
+    public class BaseService : Interfaces.Services.IBasicService
     {
-        protected List<Interfaces.Models.IUser> players;
-        protected List<IDeck> decks;
-        protected Interfaces.Models.IPlayer croupier;
 
         protected IMapper<BlackJackBusinessLogic.Interfaces.Models.ICard, BlackJackDataAccess.Models.Card> AceMapper;
         protected IMapper<BlackJackBusinessLogic.Models.Bot, BlackJackDataAccess.Models.Bot> BotMapper;
@@ -28,28 +26,28 @@ namespace BlackJackBusinessLogic.Services
 
         protected JsonService jsonService;
 
-        public BasicService(List<BlackJackBusinessLogic.Interfaces.Models.IUser> players, List<IDeck> decks, Interfaces.Models.IPlayer croupier)
+        public BaseService()
         {
-            this.players = players;
-            this.decks = decks;
-            this.croupier = croupier;
 
             jsonService = new JsonService();
 
-            this.AceMapper = new AceMapper();
-            this.BotMapper = new BotMapper();
-            this.CardMapper = new CardMapper();
-            this.CroupierMapper = new CroupierMapper();
-            this.GameResultMapper = new GameResultMapper();
-            this.ProfileMapper = new ProfileMapper();
-            this.UserMapper = new UserMapper();
+            AceMapper = new AceMapper();
+            BotMapper = new BotMapper();
+            CardMapper = new CardMapper();
+            CroupierMapper = new CroupierMapper();
+            GameResultMapper = new GameResultMapper();
+            ProfileMapper = new ProfileMapper();
+            UserMapper = new UserMapper();
         }
 
         public void RecalculateScore(Interfaces.Models.IPlayer player)
         {
-            if (IsPlayerScoreValid(player)) return;
+            if (IsPlayerScoreValid(player))
+            {
+                return;
+            }
 
-            List<Interfaces.Models.IAce> aces = CountAces(player);
+            var aces = CountAces(player);
             for (int i = 0; i < aces.Count && !IsPlayerScoreValid(player); i++)
             {
                 player.Score -= aces[i].GetSpecialCostDifference();
@@ -68,7 +66,7 @@ namespace BlackJackBusinessLogic.Services
 
         public List<Interfaces.Models.IAce> CountAces(Interfaces.Models.IPlayer player)
         {
-            List<Interfaces.Models.IAce> aces = player.Cards.Where(
+            var aces = player.Cards.Where(
                 card => card.Rank == CardRanks.CardRank.Ace
                 ).Cast<Interfaces.Models.IAce>().ToList();
 
@@ -98,15 +96,6 @@ namespace BlackJackBusinessLogic.Services
             }
         }
 
-        public Interfaces.Models.ICard PullOutCard()
-        {
-            Random random = new Random();
-            IDeck randomDeck = decks[random.Next(0, decks.Count)];
-            Interfaces.Models.ICard randomCard = randomDeck.TakeCard();
-
-            return randomCard;
-        }
-
         public void ResetPlayerScore(Interfaces.Models.IPlayer player)
         {
             player.Score = 0;
@@ -127,14 +116,17 @@ namespace BlackJackBusinessLogic.Services
 
         public Interfaces.Models.IUser GetPlayerByProfile(Interfaces.Models.IProfile playerProfile)
         {
-            BlackJackDataAccess.Models.Profile profile = jsonService.ProfilesRepository.Get(ProfileMapper.ConvertItemToDataAccess(playerProfile));
+            var profile = jsonService.ProfilesRepository.Get(ProfileMapper.ConvertItemToDataAccess(playerProfile));
 
-            if (profile == null) return null;
+            if (profile == null)
+            {
+                return null;
+            }
 
 
-            BlackJackDataAccess.Models.User DAuser = profile.User;
+            var DataAccessUser = profile.User;
 
-            return UserMapper.ConvertItemToBusinessLogic(DAuser);
+            return UserMapper.ConvertItemToBusinessLogic(DataAccessUser);
         }
     }
 }

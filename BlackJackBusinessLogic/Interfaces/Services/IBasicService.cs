@@ -10,9 +10,7 @@ namespace BlackJackBusinessLogic.Interfaces.Services
     {
 
         IMapper<BlackJackBusinessLogic.Models.GameResult, BlackJackDataAccess.Models.GameResult> GameResultMapper { get; set; }
-
-
-
+        
         Interfaces.Models.IUser GetPlayerByProfile(Interfaces.Models.IProfile playerProfile);
 
         void PlayerGetCard(Interfaces.Models.IPlayer player, Interfaces.Models.ICard card);
@@ -22,8 +20,6 @@ namespace BlackJackBusinessLogic.Interfaces.Services
         void ResetPlayerDeck(Interfaces.Models.IPlayer player);
 
         void ResetPlayerScore(Interfaces.Models.IPlayer player);
-
-        Interfaces.Models.ICard PullOutCard();
 
         List<Interfaces.Models.IAce> CountAces(Interfaces.Models.IPlayer player);
 

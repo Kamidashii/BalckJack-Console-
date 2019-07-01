@@ -6,16 +6,20 @@ namespace BlackJackBusinessLogic.Mappers
     {
         public BlackJackBusinessLogic.Models.Bot ConvertItemToBusinessLogic(BlackJackDataAccess.Models.Bot DataAccessBot)
         {
-            BlackJackBusinessLogic.Models.Bot BusinessLogicBot = new BlackJackBusinessLogic.Models.Bot(DataAccessBot.Name, DataAccessBot.Bet,DataAccessBot.Demeanor, DataAccessBot.Score, ConvertCardsToBusinessLogic(DataAccessBot.Cards),DataAccessBot.IsBot);
+            var cards = ConvertCardsToBusinessLogic(DataAccessBot.Cards);
+
+            var BusinessLogicBot = new BlackJackBusinessLogic.Models.Bot(DataAccessBot.Name, DataAccessBot.Bet,DataAccessBot.Demeanor, DataAccessBot.Score, cards, DataAccessBot.IsBot);
 
             return BusinessLogicBot;
         }
 
         public BlackJackDataAccess.Models.Bot ConvertItemToDataAccess(BlackJackBusinessLogic.Models.Bot BusinessLogicBot)
         {
-            BlackJackDataAccess.Models.Bot DABot = new BlackJackDataAccess.Models.Bot(BusinessLogicBot.Name, BusinessLogicBot.Bet, BusinessLogicBot.Demeanor, BusinessLogicBot.Score, ConvertCardsToDataAccess(BusinessLogicBot.Cards), BusinessLogicBot.IsBot);
+            var cards = ConvertCardsToDataAccess(BusinessLogicBot.Cards);
 
-            return DABot;
+            var DataAccessBot = new BlackJackDataAccess.Models.Bot(BusinessLogicBot.Name, BusinessLogicBot.Bet, BusinessLogicBot.Demeanor, BusinessLogicBot.Score, cards, BusinessLogicBot.IsBot);
+
+            return DataAccessBot;
         }
     }
 }

@@ -3,6 +3,7 @@ using BlackJackDataAccess.Interfaces;
 using BlackJackDataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
+using BlackJackDataAccess.Interfaces.Repositories;
 
 namespace BlackJackDataAccess.Repositories
 {
@@ -12,22 +13,22 @@ namespace BlackJackDataAccess.Repositories
 
         public ProfilesRepository(List<Profile> profiles)
         {
-            this.Profiles = profiles;
+            Profiles = profiles;
         }
 
         public void Create(Profile item)
         {
-            this.Profiles.Add(item);
+            Profiles.Add(item);
         }
 
         public Profile Get(Profile item)
         {
-            return this.Profiles.Where(profile => profile.Login == item.Login && profile.Password == item.Password).FirstOrDefault();
+            return Profiles.Where(profile => profile.Login == item.Login && profile.Password == item.Password).FirstOrDefault();
         }
 
         public IEnumerable<Profile> GetAll()
         {
-            return this.Profiles;
+            return Profiles;
         }
     }
 }

@@ -12,16 +12,16 @@ namespace BlackJackBusinessLogic.Models
 
         public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor) : base(name, bet)
         {
-            this.Demeanor = demeanor;
-            this.IsBot = true;
+            Demeanor = demeanor;
+            IsBot = true;
         }
 
         public Bot(string name, int bet, BotDemeanors.BotDemeanor demeanor, int score, List<Interfaces.Models.ICard> cards,bool isBot) : base(name, bet)
         {
-            this.Score = score;
-            this.Cards = cards;
-            this.Demeanor = demeanor;
-            this.IsBot = isBot;
+            Score = score;
+            Cards = cards;
+            Demeanor = demeanor;
+            IsBot = isBot;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace BlackJackBusinessLogic.Interfaces.Services
         IBotService BotService { get; set; }
         IBasicService UserService { get; set; }
         ICroupierService CroupierService { get; set; }
+        IDeckService DeckService { get; set; }
 
         List<Interfaces.Models.IUser> Players { get; set; }
         Interfaces.Models.IPlayer Croupier { get; set; }
@@ -26,10 +27,15 @@ namespace BlackJackBusinessLogic.Interfaces.Services
 
 
         void SaveResults();
-        void SetServices(IBasicService basicService, IBotService botService, IBasicService userService, ICroupierService croupierService);
+
         List<GameResult> LoadResults();
+
         GameResult CheckWinners();
+
         void GiveFirstCards();
+
         void ResetGameData();
+
+        void RemoveOldUser();
     }
 }

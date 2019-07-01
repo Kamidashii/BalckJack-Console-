@@ -11,19 +11,19 @@ namespace BlackJackBusinessLogic.Models
 
         public User(string name, int bet)
         {
-            this.Name = name;
-            this.Bet = bet;
-            this.IsBot = false;
+            Name = name;
+            Bet = bet;
+            IsBot = false;
         }
 
 
         public User(string name, int bet, int score, List<Interfaces.Models.ICard> cards,bool isBot)
         {
-            this.Name = name;
-            this.Bet = bet;
-            this.Score = score;
-            this.Cards = cards;
-            this.IsBot = isBot;
+            Name = name;
+            Bet = bet;
+            Score = score;
+            Cards = cards;
+            IsBot = isBot;
         }
     }
 }

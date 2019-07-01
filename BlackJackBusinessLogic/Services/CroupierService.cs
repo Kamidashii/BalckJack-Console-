@@ -8,29 +8,37 @@ using Common.Constants;
 
 namespace BlackJackBusinessLogic.Services
 {
-    public class CroupierService : BasicService,ICroupierService
+    public class CroupierService : BaseService,ICroupierService
     {
-        public CroupierService(List<Interfaces.Models.IUser> players, List<IDeck> decks, Interfaces.Models.IPlayer croupier) : base(players, decks, croupier) { }
+        private IDeckService _deckService;
 
-        public void StartCroupierTurn(Interfaces.Models.IPlayer croupier)
+        public CroupierService()
         {
-            CroupierAction(croupier);
+            _deckService = new DeckService();
         }
 
-        private void CroupierAction(Interfaces.Models.IPlayer croupier)
+        public void StartCroupierTurn(Interfaces.Models.IPlayer croupier, List<IDeck> decks)
         {
-            ICard pullOutedCard = PullOutCard();
+            CroupierAction(croupier,decks);
+        }
+
+        private void CroupierAction(Interfaces.Models.IPlayer croupier,List<IDeck>decks)
+        {
+            ICard pullOutedCard = _deckService.PullOutCard(decks);
 
             PlayerGetCard(croupier, pullOutedCard);
             RecalculateScore(croupier);
 
-            if (croupier.Score < Croupier_Constants.TakeUntil) CroupierAction(croupier);
+            if (croupier.Score < Croupier_Constants.TakeUntil)
+            {
+                CroupierAction(croupier,decks);
+            }
         }
 
         public override Interfaces.Models.IPlayer MakePlayerClone(Interfaces.Models.IPlayer original)
         {
-            Croupier origin = original as Croupier;
-            Interfaces.Models.IPlayer copy = new Croupier(origin.Score, origin.Cards);
+            var origin = original as Croupier;
+            var copy = new Croupier(origin.Score, origin.Cards);
             return copy;
         }
     }

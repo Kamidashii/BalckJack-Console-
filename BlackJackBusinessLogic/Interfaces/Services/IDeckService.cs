@@ -11,5 +11,6 @@ namespace BlackJackBusinessLogic.Interfaces.Services
     {
         void SetAllCards(IDeck deck);
         void ShuffleCards(IDeck deck);
+        ICard PullOutCard(List<IDeck> decks);
     }
 }

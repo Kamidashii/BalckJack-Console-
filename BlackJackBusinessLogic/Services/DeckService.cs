@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BlackJackBusinessLogic.Interfaces;
 using BlackJackBusinessLogic.Interfaces.Models;
 using BlackJackBusinessLogic.Interfaces.Services;
@@ -51,6 +52,15 @@ namespace BlackJackBusinessLogic.Services
                 deck.Cards[i] = deck.Cards[swapIndex];
                 deck.Cards[swapIndex] = tmp;
             }
+        }
+
+        public Interfaces.Models.ICard PullOutCard(List<IDeck>decks)
+        {
+            var random = new Random();
+            IDeck randomDeck = decks[random.Next(0, decks.Count)];
+            Interfaces.Models.ICard randomCard = randomDeck.TakeCard();
+
+            return randomCard;
         }
     }
 }

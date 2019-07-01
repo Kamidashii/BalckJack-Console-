@@ -18,23 +18,23 @@ namespace BlackJackBusinessLogic.Models
 
         public GameResult(int gameId)
         {
-            this.GameId = gameId;
+            GameId = gameId;
 
-            this.Winners = new List<Interfaces.Models.IUser>();
-            this.Losers = new List<Interfaces.Models.IUser>();
-            this.Draws = new List<Interfaces.Models.IUser>();
+            Winners = new List<Interfaces.Models.IUser>();
+            Losers = new List<Interfaces.Models.IUser>();
+            Draws = new List<Interfaces.Models.IUser>();
         }
 
         public GameResult(int gameId,int allGamesCount,List<Interfaces.Models.IUser> winners,List<Interfaces.Models.IUser>losers,List<Interfaces.Models.IUser>draws,Croupier croupier)
         {
-            this.GameId = gameId;
-            this.AllGamesCount = allGamesCount;
+            GameId = gameId;
+            AllGamesCount = allGamesCount;
 
-            this.Winners = winners;
-            this.Losers = losers;
-            this.Draws = draws;
+            Winners = winners;
+            Losers = losers;
+            Draws = draws;
 
-            this.Croupier = croupier;
+            Croupier = croupier;
         }
     }
 }

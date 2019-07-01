@@ -13,7 +13,7 @@ namespace BlackJackBusinessLogic.Models
 
         public int GetSpecialCostDifference()
         {
-            return this.Cost - this.SpecialCost;
+            return Cost - SpecialCost;
         }
     }
 }

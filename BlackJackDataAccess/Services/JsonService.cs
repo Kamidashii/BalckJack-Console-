@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using BlackJackDataAccess.Interfaces;
+using BlackJackDataAccess.Interfaces.Repositories;
+using BlackJackDataAccess.Interfaces.Services;
 using BlackJackDataAccess.Models;
 using BlackJackDataAccess.Repositories;
 using Common.Constants;
 using Newtonsoft.Json;
 
-namespace BlackJackDataAccess
+namespace BlackJackDataAccess.Services
 {
     public class JsonService : IJsonService
     {
-        private GameResultsRepository gameResultsRepository;
-        private ProfilesRepository profilesRepository;
+        private GameResultsRepository _gameResultsRepository;
+        private ProfilesRepository _profilesRepository;
 
         public IRepository<GameResult> GameResultsRepository
         {
             get
             {
-                if (this.gameResultsRepository == null)
+                if (_gameResultsRepository == null)
                 {
 
                     CreateResultsFolder();
@@ -28,7 +30,7 @@ namespace BlackJackDataAccess
                     LoadGameResults();
                 }
 
-                return this.gameResultsRepository;
+                return _gameResultsRepository;
             }
         }
 
@@ -36,11 +38,13 @@ namespace BlackJackDataAccess
         {
             get
             {
-                if(this.profilesRepository==null)
+                if(_profilesRepository==null)
                 {
-                    this.profilesRepository = new ProfilesRepository(new List<Profile> { new Profile("login1", "password1", new User("Vasya", 200)) });
+                    _profilesRepository = new ProfilesRepository(new List<Profile> {
+                        new Profile("login1", "password1", new User("Vasya", 200)),
+                        new Profile("login2", "password2", new User("Petya", 350))});
                 }
-                return this.profilesRepository;
+                return _profilesRepository;
             }
         }
 
@@ -52,7 +56,7 @@ namespace BlackJackDataAccess
                 {
                     string jSon = reader.ReadToEnd();
 
-                    this.gameResultsRepository = new GameResultsRepository(JsonConvert.DeserializeObject<List<GameResult>>(jSon));
+                    _gameResultsRepository = new GameResultsRepository(JsonConvert.DeserializeObject<List<GameResult>>(jSon));
                 }
             }
             catch (Exception exc)
@@ -67,7 +71,7 @@ namespace BlackJackDataAccess
             {
                 CreateResultsFolder();
 
-                IEnumerable<GameResult> gameResults = this.gameResultsRepository.GetAll();
+                IEnumerable<GameResult> gameResults = _gameResultsRepository.GetAll();
                 string jSon = JsonConvert.SerializeObject(gameResults);
 
                 using (StreamWriter writer = new StreamWriter(GameService_Constants.ResultsPath, false, Encoding.Default))

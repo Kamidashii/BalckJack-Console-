@@ -12,16 +12,16 @@ namespace BlackJackBusinessLogic.Models
 
         public Profile(string login, string password)
         {
-            this.Login = login;
-            this.Password = password;
+            Login = login;
+            Password = password;
         }
 
         public Profile(string login, string password, Interfaces.Models.IUser user)
         {
-            this.Login = login;
-            this.Password = password;
+            Login = login;
+            Password = password;
 
-            this.User = user;
+            User = user;
         }
     }
 }

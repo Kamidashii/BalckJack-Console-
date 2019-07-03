@@ -85,7 +85,7 @@ namespace BlackJackBusinessLogic.Services
 
         public GameResult CheckWinners()
         {
-            GameResult gameResult = new GameResult(GameId);
+            var gameResult = new GameResult(GameId);
             gameResult.AllGamesCount = this.GamesCount;
 
             for (int i = 0; i < this.Players.Count; ++i)

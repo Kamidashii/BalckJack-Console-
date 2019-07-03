@@ -226,6 +226,7 @@ namespace Views
 
         public static void WelcomeUser(string name)
         {
+            Console.Clear();
             Console.WriteLine("Welcome, " + name + "!");
         }
 

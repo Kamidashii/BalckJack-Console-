@@ -236,7 +236,7 @@ namespace BlackJack
 
         private void SetArtificialWaiting()
         {
-            Thread.Sleep(200);
+            Thread.Sleep(1000);
         }
 
         public bool Authorize()

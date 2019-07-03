@@ -22,14 +22,15 @@ namespace BlackJackBusinessLogic.Services
         protected IMapper<BlackJackBusinessLogic.Interfaces.Models.IProfile, BlackJackDataAccess.Models.Profile> ProfileMapper;
         protected IMapper<BlackJackBusinessLogic.Interfaces.Models.IUser, BlackJackDataAccess.Models.User> UserMapper;
 
-        public IMapper<BlackJackBusinessLogic.Models.GameResult, BlackJackDataAccess.Models.GameResult> GameResultMapper { get; set; }
+        protected JsonService _jsonService;
 
-        protected JsonService jsonService;
+        public IMapper<BlackJackBusinessLogic.Models.GameResult, BlackJackDataAccess.Models.GameResult> GameResultMapper { get; set; }
+        
 
         public BaseService()
         {
 
-            jsonService = new JsonService();
+            _jsonService = new JsonService();
 
             AceMapper = new AceMapper();
             BotMapper = new BotMapper();
@@ -116,7 +117,7 @@ namespace BlackJackBusinessLogic.Services
 
         public Interfaces.Models.IUser GetPlayerByProfile(Interfaces.Models.IProfile playerProfile)
         {
-            var profile = jsonService.ProfilesRepository.Get(ProfileMapper.ConvertItemToDataAccess(playerProfile));
+            var profile = _jsonService.ProfilesRepository.Get(ProfileMapper.ConvertItemToDataAccess(playerProfile));
 
             if (profile == null)
             {
